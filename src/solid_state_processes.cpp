@@ -63,8 +63,9 @@ void vector_in_array(float4_t *points_array, const std::vector<Point> &points_ve
 		points_array[i].w = 0;
 	}
 }
+
 void max_min(int n, std::vector<Point> points_vector, float_x &x_min, float_x &y_min, float_x &z_min,
-			 float_x &x_max, float_x &y_max, float_x &z_max)
+float_x &x_max, float_x &y_max, float_x &z_max)
 { // mit der referenz kann man dann die variable selber ändern
 
 	for (int h = 0; h < n; h++)
@@ -132,7 +133,7 @@ void max_min(int n, std::vector<Point> points_vector, float_x &x_min, float_x &y
 }*/
 
 void find_fixed(int *fixed, float4_t *points_array, int n, float_x x_min_substrate,
-				float_x y_min_substrate, float_x z_min_substrate, float_x x_max_substrate, float_x y_max_substrate)
+float_x y_min_substrate, float_x z_min_substrate, float_x x_max_substrate, float_x y_max_substrate)
 {
 
 	for (int i = 0; i < n; i++)
@@ -323,19 +324,19 @@ void setup_FS()
 	vector_in_array(array_ptr, combined_vector, n);
 
 	// 4  minmalen und maximalen Wert von allen richtungen bestimmen
-	float_x x_min_substrate = 0;
-	float_x y_min_substrate = 0;
-	float_x z_min_substrate = 0;
-	float_x x_max_substrate = -211002;
-	float_x y_max_substrate = -211002;
-	float_x z_max_substrate = -211002;
+	float_x x_min_substrate = std::numeric_limits<float_x>::max();
+	float_x y_min_substrate = std::numeric_limits<float_x>::max();
+	float_x z_min_substrate = std::numeric_limits<float_x>::max();
+	float_x x_max_substrate = std::numeric_limits<float_x>::min();
+	float_x y_max_substrate = std::numeric_limits<float_x>::min();
+	float_x z_max_substrate = std::numeric_limits<float_x>::min();
 
 	float_x x_min_rod = std::numeric_limits<float_x>::max();
 	float_x y_min_rod = std::numeric_limits<float_x>::max();
 	float_x z_min_rod = std::numeric_limits<float_x>::max();
-	float_x x_max_rod = -211002;
-	float_x y_max_rod = -211002;
-	float_x z_max_rod = -211002;
+	float_x x_max_rod = std::numeric_limits<float_x>::min();
+	float_x y_max_rod = std::numeric_limits<float_x>::min();
+	float_x z_max_rod = std::numeric_limits<float_x>::min();
 
 	// substrate min_max
 	max_min(n_substrate, points_vector_substrate, x_min_substrate, y_min_substrate, z_min_substrate,
@@ -361,8 +362,8 @@ void setup_FS()
 	float4_t *pos = new float4_t[n];
 	float4_t *vel = new float4_t[n];
 	float_x *h = new float_x[n];   // smoothing length
-	float_x *rho = new float_x[n]; // density
-	float_x *T = new float_x[n];
+	float_x *rho = new float_x[n]; // density              trennen in rod und subtrate 
+	float_x *T = new float_x[n];   // trennen in rod und subtrate
 	int *tool_p = new int[n];
 	int *fixed = new int[n];
 
@@ -378,12 +379,25 @@ void setup_FS()
 		{
 
 			tool_p[i] = 1;
+
 		}
 		else
 		{
 
 			tool_p[i] = 0;
 		}
+
+		pos[i].x = points_array[i].x;
+		pos[i].y = points_array[i].y;
+		pos[i].z = points_array[i].z;
+
+
+		//vel hier
+
+
+
+		h[i] = hdx;
+
 	}
 
 
@@ -408,5 +422,11 @@ void setup_FS()
 	float_x delta_t_max = CFL * hdx * dz / (sqrt(max_vel) + c0);
 	global_time_dt = 0.5 * delta_t_max;
 
-	std::cout<<"moin"<<std::endl;
+	delete[] pos;
+	delete[] vel;
+	delete[] h;
+	delete[] rho;
+	delete[] T;
+	delete[] tool_p;
+	delete[] fixed;
 }
