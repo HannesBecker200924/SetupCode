@@ -206,7 +206,7 @@ void setup_FS()
 
 	trml_substrate.cp = ((910. * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
 	trml_substrate.tq = 0.9;
-	trml_substrate.eta = 0.9;												 // effizienz									         //Taylor-Quinney koeffizient
+	trml_substrate.eta = 0.9;									
 	trml_substrate.k = 117. * 1.0e6 * global_Vsf * power_Unit / length_Unit; // wärmeleitfähigkeit
 	trml_substrate.alpha = trml_substrate.k / (phys_substrate.rho0 * trml_substrate.cp);
 	trml_substrate.T_init = joco_substrate.Tref + temp_Unit; // referenztemperatur
@@ -248,7 +248,7 @@ void setup_FS()
 
 	trml_rod.cp = ((910. * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
 	trml_rod.tq = 0.9;
-	trml_rod.eta = 0.9;												 // effizienz									         //Taylor-Quinney koeffizient
+	trml_rod.eta = 0.9;												
 	trml_rod.k = 117. * 1.0e6 * global_Vsf * power_Unit / mass_Unit; // wärmeleitfähigkeit
 	trml_rod.alpha = trml_rod.k / (phys_rod.rho0 * trml_rod.cp);
 	trml_rod.T_init = joco_rod.Tref + temp_Unit; // referenztemperatur
@@ -407,4 +407,6 @@ void setup_FS()
 	constexpr float_x CFL = 0.3;
 	float_x delta_t_max = CFL * hdx * dz / (sqrt(max_vel) + c0);
 	global_time_dt = 0.5 * delta_t_max;
+
+	std::cout<<"moin"<<std::endl;
 }
