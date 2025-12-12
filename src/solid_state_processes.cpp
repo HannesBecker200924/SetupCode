@@ -170,6 +170,7 @@ void setup_FS()
 	float_x dz = 1.0 * length_Unit;
 	float_x ms = 1.0;
 	float_x hdx = 1.7;
+	float_x init_temp = 20 + temp_Unit;
 	global_Vsf = 10;
 	global_dz = dz;
 
@@ -379,25 +380,22 @@ void setup_FS()
 		{
 
 			tool_p[i] = 1;
-
+			rho[i] =  phys_substrate.rho0;
 		}
 		else
 		{
 
 			tool_p[i] = 0;
+			rho[i] = phys_rod.rho0;		
 		}
 
 		pos[i].x = points_array[i].x;
 		pos[i].y = points_array[i].y;
 		pos[i].z = points_array[i].z;
-
-
-		//vel hier
-
-
-
+		T[i] = init_temp;
+		//vel here
 		h[i] = hdx;
-
+		T[i] = init_temp;
 	}
 
 
