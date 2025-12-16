@@ -18,6 +18,10 @@ extern float_x hdx;
 
 //geschwindigkeiten
 
+extern float_x vel_x;
+extern float_x vel_y;
+extern float_x vel_z;
+
 extern float_x global_rod_vel;
 extern float_x global_substrate_vel;
 
@@ -55,4 +59,4 @@ extern float_x	global_time_final;
 
 
 void setup_FS();
-#endif /* SSP_H_ */
+#endif  //SSP_H_ 

@@ -174,6 +174,9 @@ void setup_FS()
 	global_Vsf = 10;
 	global_dz = dz;
 
+	float_x vel_x = 0.0;
+	float_x vel_y = 0.0;
+	float_x vel_z = 0.0;
 	float_x global_rod_vel = (-2.0 * global_Vsf) * length_Unit / time_Unit; // negativ da nach unten und mal Vsf für den Faktor
 	float_x global_substrate_vel = 5. * global_Vsf * length_Unit / time_Unit;
 	float_x global_wz = (900. * 0.104719755 * global_Vsf) * angle_Unit / time_Unit; // Winkelgeschwindigkeit (rad/s)
@@ -393,7 +396,9 @@ void setup_FS()
 		pos[i].y = points_array[i].y;
 		pos[i].z = points_array[i].z;
 		T[i] = init_temp;
-		//vel here
+		vel[i].x = vel_x;
+		vel[i].y = vel_y;
+		vel[i].z = vel_z;
 		h[i] = hdx;
 		T[i] = init_temp;
 	}
@@ -427,4 +432,6 @@ void setup_FS()
 	delete[] T;
 	delete[] tool_p;
 	delete[] fixed;
+
+	std::cout<<"moin"<<std::endl;
 }

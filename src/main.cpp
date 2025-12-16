@@ -18,6 +18,9 @@ float_x global_substrate_velocity = 0.0;
 float_x global_rod_feeding_rate = 0.0;
 float_x global_Vsf = 0.0;
 float_x global_dz = 0.0;
+float_x vel_x = 0.0;
+float_x vel_y = 0.0;
+float_x vel_z = 0.0;
 
 
 

@@ -6,10 +6,11 @@
 #include<fstream>
 #include<string>
 
-int print_to_textfile(float_x* length_Unit, float_x* time_Unit, float_x &mass_Unit, float_x &temp_Unit,
+void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
 float_x &pressure_Unit, float_x &energy_Unit, float_x &power_Unit, float_x &angle_Unit,
 float_x &dz, float_x &ms, float_x &hdx, float_x &global_Vsf, float_x &global_dz,
-float_x &global_rod_vel, float_x &global_substrate_vel, float_x &global_wz, glm::vec3 &w, 
+float_x& vel_x, float_x& vel_y, float_x& vel_z, float_x &global_rod_vel, float_x &global_substrate_vel, 
+float_x &global_wz, glm::vec3 &w, 
 int &step, float_x &global_time_final,
 phys_constants phys_substrate,trml_constants trml_substrate,corr_constants corr_substrate,joco_constants joco_substrate,
 phys_constants& phys_rod, joco_constants& joco_rod, trml_constants& trml_rod, corr_constants& corr_rod,
@@ -19,7 +20,6 @@ float_x& CFl);
 
 
 /*In dieser file sollen alle daten die gesammelt wurden(konstanten) in eine textfile geprintet werden
-
 
 // units converter values (umrechnungen einheiten)
 // standard Einheiten: millimeter, sekunde, gramm, grad celsius,
@@ -32,19 +32,16 @@ float_x energy_Unit = 1.;	// standard J = 1      kJ =  * 1000
 float_x power_Unit = 1.;	// standard Watt = 1   kW = * 1000
 float_x angle_Unit = 1.;	// standard Bogenmaß rad = 1    Grad = (pii/180)
 
-
 float_x dz = 1.0 * length_Unit;
 	float_x ms = 1.0;
 	float_x hdx = 1.7;
     global_Vsf = 10;
 	global_dz = dz;
 
-
     float_x global_rod_vel = (-2.0 * global_Vsf) * length_Unit / time_Unit; // negativ da nach unten und mal Vsf für den Faktor
 	float_x global_substrate_vel = 5. * global_Vsf * length_Unit / time_Unit;
 	float_x global_wz = (900. * 0.104719755 * global_Vsf) * angle_Unit / time_Unit; // Winkelgeschwindigkeit (rad/s)
 	glm::vec3 w(0.0, 0.0, global_wz);
-
 
     int step = 0; // Anfangsposition
 	global_time_final = 8. / global_Vsf; // 0.7 s ramping
@@ -93,7 +90,6 @@ float_x dz = 1.0 * length_Unit;
 	trml_constants trml_rod = make_trml_constants();
 	corr_constants corr_rod = make_corr_constants();
 
-
 	phys_rod.E = 70.e9 * pressure_Unit;
 	phys_rod.rho0 = (2700.0 * 1.0e-6) * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
 	phys_rod.nu = 0.3;
@@ -125,8 +121,6 @@ float_x dz = 1.0 * length_Unit;
 	corr_rod.stresseps = 0.3;
 	corr_rod.wdeltap = fac * (1 - 1.5 * q * q * (1 - 0.5 * q));
 
-
-    
 	// 2.3   substrate dimensionen
 	const float_x substrate_width = 50. * length_Unit;
 	const float_x substrate_length = 100. * length_Unit;
@@ -137,22 +131,9 @@ float_x dz = 1.0 * length_Unit;
 	float_x shift_x = substrate_length / 4.0;
 	float_x shift_y;
 	float_x shift_z;
-    
-    
+        
     constexpr float_x CFL = 0.3;
     
-    
     */
-
-
-
-
-
-
-
-
-
-
-
 #endif
 
