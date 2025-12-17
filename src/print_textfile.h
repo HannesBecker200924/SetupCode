@@ -6,17 +6,26 @@
 #include<fstream>
 #include<string>
 
-void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
+void print_to_textfile(data_struct data_for_print_f);
+
+
+/*void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
 float_x &pressure_Unit, float_x &energy_Unit, float_x &power_Unit, float_x &angle_Unit,
 float_x &dz, float_x &ms, float_x &hdx, float_x &global_Vsf, float_x &global_dz,
 float_x& vel_x, float_x& vel_y, float_x& vel_z, float_x &global_rod_vel, float_x &global_substrate_vel, 
 float_x &global_wz, glm::vec3 &w, 
 int &step, float_x &global_time_final,
-phys_constants phys_substrate,trml_constants trml_substrate,corr_constants corr_substrate,joco_constants joco_substrate,
+phys_constants& phys_substrate,trml_constants& trml_substrate,corr_constants& corr_substrate,joco_constants& joco_substrate,
 phys_constants& phys_rod, joco_constants& joco_rod, trml_constants& trml_rod, corr_constants& corr_rod,
 float_x &substrate_width, float_x &substrate_length, float_x &substrate_thickness, float_x &rod_diameter, float_x &rod_height,
 float_x& shift_x, float_x& shift_y, float_x& shift_z,
 float_x& CFl);
+
+Diese Funktion funktioniert nur wenn jeder einzelne Parameter einzeln übergeben wird und nicht als array.
+Dafür kann dann der Datentyp setup_FS funktion geändert werden.
+
+
+*/
 
 
 /*In dieser file sollen alle daten die gesammelt wurden(konstanten) in eine textfile geprintet werden

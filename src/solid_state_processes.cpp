@@ -153,7 +153,7 @@ float_x y_min_substrate, float_x z_min_substrate, float_x x_max_substrate, float
 	}
 }
 
-void setup_FS()
+data_struct setup_FS()
 {
 	// units converter values (umrechnungen einheiten)
 	// standard Einheiten: millimeter, sekunde, gramm, grad celsius,
@@ -415,7 +415,17 @@ void setup_FS()
 	bbmax.y = y_max_substrate + dz;
 	bbmax.z = z_max_rod + dz;
 	vtk_writer_write_blanking(bbmin, bbmax, step);
-	vtk_writer_write(n, points_array, step, fixed, tool_p);
+	vtk_writer_write(n, points_array, rho,  step, fixed, tool_p);
+
+
+	float4_t *pos = new float4_t[n];
+	float4_t *vel = new float4_t[n];
+	float_x *h = new float_x[n];   // smoothing length
+	float_x *rho = new float_x[n]; // density              trennen in rod und subtrate 
+	float_x *T = new float_x[n];   // trennen in rod und subtrate
+	int *tool_p = new int[n];
+	int *fixed = new int[n];
+
 
 	float_x max_vel = w.z * (rod_diameter / 2.0);
 	float_x c0_substrate = sqrt(phys_substrate.K / phys_substrate.rho0);
@@ -433,5 +443,49 @@ void setup_FS()
 	delete[] tool_p;
 	delete[] fixed;
 
-	std::cout<<"moin"<<std::endl;
+	data_struct data_for_print_f;
+
+	data_for_print_f.length_Unit = length_Unit; 
+	data_for_print_f.time_Unit = time_Unit;
+	data_for_print_f.mass_Unit = mass_Unit;
+	data_for_print_f.temp_Unit = temp_Unit;
+    data_for_print_f.pressure_Unit = pressure_Unit; 
+	data_for_print_f.energy_Unit = energy_Unit;
+	data_for_print_f.power_Unit = power_Unit;
+	data_for_print_f.angle_Unit = angle_Unit;
+    data_for_print_f.dz = dz;
+	data_for_print_f.ms = ms;
+	data_for_print_f.hdx = hdx;
+	data_for_print_f.global_Vsf = global_Vsf;
+	data_for_print_f.global_dz = global_dz;
+	data_for_print_f.vel_x = vel_x;
+	data_for_print_f.vel_y = vel_y;
+	data_for_print_f.vel_z = vel_z;
+	data_for_print_f.global_rod_vel = global_rod_vel;
+	data_for_print_f.global_substrate_vel = global_substrate_vel;
+	data_for_print_f.global_wz = global_wz; 
+	data_for_print_f.w = w; 
+    data_for_print_f.step = step;
+	data_for_print_f.global_time_final = global_time_final;
+    data_for_print_f.phys_substrate = phys_substrate;
+	data_for_print_f.trml_substrate = trml_substrate;
+	data_for_print_f.corr_substrate = corr_substrate;
+	data_for_print_f.joco_substrate = joco_substrate;
+    data_for_print_f.phys_rod = phys_rod;
+	data_for_print_f.joco_rod = joco_rod;
+	data_for_print_f.trml_rod = trml_rod;
+	data_for_print_f.corr_rod = corr_rod;
+    data_for_print_f.substrate_width = substrate_width;
+	data_for_print_f.substrate_length = substrate_length;
+	data_for_print_f.substrate_thickness = substrate_thickness;
+	data_for_print_f.rod_diameter = rod_diameter;
+	data_for_print_f.rod_height = rod_height;
+    data_for_print_f.shift_x = shift_x;
+	data_for_print_f.shift_y = shift_y;
+	data_for_print_f.shift_z = shift_z;
+    data_for_print_f.CFl = CFL;
+
+	//std::cout<<"moin"<<std::endl;
+
+	return data_for_print_f;
 }
