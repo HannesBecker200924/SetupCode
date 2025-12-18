@@ -36,7 +36,6 @@ extern float_x z_max_bb;
 extern float_x global_time_dt;
 extern float_x	global_time_final;
 
-
 struct data_struct{
 
 	float_x length_Unit; 
@@ -61,6 +60,9 @@ struct data_struct{
 	glm::vec3 w; 
     int step;
 	float_x global_time_final;
+	float_x h1;
+	float_x q;
+	float_x fac;
     phys_constants phys_substrate;
 	trml_constants trml_substrate;
 	corr_constants corr_substrate;

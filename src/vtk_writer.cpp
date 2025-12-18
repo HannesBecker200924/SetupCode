@@ -57,7 +57,7 @@ void vtk_writer_write_blanking(vec3_t bbmin, vec3_t bbmax, int step)
 	fclose(fp);
 }
 
-void vtk_writer_write(int n, float4_t* h_pos, int step, int* h_fixed, int* h_tool_p)
+void vtk_writer_write(int n, float4_t* h_pos, int step, float_x* h_rho, float4_t* h_vel, int* h_fixed, int* h_tool_p)
 
 {
 
@@ -95,7 +95,7 @@ void vtk_writer_write(int n, float4_t* h_pos, int step, int* h_fixed, int* h_too
 	 // You will use the following to write additional data per point
 	 // you will need to pass the relevant arrays to this function
 
-	fprintf(fp, "POINT_DATA %d\n", n);/*
+	fprintf(fp, "POINT_DATA %d\n", n);
 	fprintf(fp, "SCALARS density float 1\n"); 
 	fprintf(fp, "LOOKUP_TABLE default\n");
 	for (unsigned int i = 0; i < n; i++)
@@ -122,7 +122,7 @@ void vtk_writer_write(int n, float4_t* h_pos, int step, int* h_fixed, int* h_too
 	}
 	fprintf(fp, "\n");
 
-	fprintf(fp, "VECTORS fc float \n");
+	/*fprintf(fp, "VECTORS fc float \n");
 	for (unsigned int i = 0; i < n; i++)
 	{
 		
@@ -176,7 +176,7 @@ void vtk_writer_write(int n, float4_t* h_pos, int step, int* h_fixed, int* h_too
 	}
 	fprintf(fp, "\n");
 
-	/*fprintf(fp, "SCALARS idx float 1\n");
+	fprintf(fp, "SCALARS idx float 1\n");
 	fprintf(fp, "LOOKUP_TABLE default\n");
 	for (unsigned int i = 0; i < n; i++)
 	{
@@ -185,7 +185,7 @@ void vtk_writer_write(int n, float4_t* h_pos, int step, int* h_fixed, int* h_too
 	}
 	fprintf(fp, "\n");
 
-	fprintf(fp, "SCALARS EquivAccumPlasticStrain float 1\n"); // equivalent accumulated plastic strain
+	/*fprintf(fp, "SCALARS EquivAccumPlasticStrain float 1\n"); // equivalent accumulated plastic strain
 	fprintf(fp, "LOOKUP_TABLE default\n");
 	for (unsigned int i = 0; i < n; i++)
 	{

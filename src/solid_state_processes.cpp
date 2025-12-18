@@ -1,4 +1,5 @@
 #include "solid_state_processes.h"
+#include "print_textfile.h"
 
 struct Point
 {
@@ -415,17 +416,7 @@ data_struct setup_FS()
 	bbmax.y = y_max_substrate + dz;
 	bbmax.z = z_max_rod + dz;
 	vtk_writer_write_blanking(bbmin, bbmax, step);
-	vtk_writer_write(n, points_array, rho,  step, fixed, tool_p);
-
-
-	float4_t *pos = new float4_t[n];
-	float4_t *vel = new float4_t[n];
-	float_x *h = new float_x[n];   // smoothing length
-	float_x *rho = new float_x[n]; // density              trennen in rod und subtrate 
-	float_x *T = new float_x[n];   // trennen in rod und subtrate
-	int *tool_p = new int[n];
-	int *fixed = new int[n];
-
+	vtk_writer_write(n, points_array, step, rho, vel, fixed, tool_p);
 
 	float_x max_vel = w.z * (rod_diameter / 2.0);
 	float_x c0_substrate = sqrt(phys_substrate.K / phys_substrate.rho0);
@@ -467,6 +458,9 @@ data_struct setup_FS()
 	data_for_print_f.w = w; 
     data_for_print_f.step = step;
 	data_for_print_f.global_time_final = global_time_final;
+	data_for_print_f.h1 = h1;
+	data_for_print_f.q = q;
+	data_for_print_f.fac = fac;
     data_for_print_f.phys_substrate = phys_substrate;
 	data_for_print_f.trml_substrate = trml_substrate;
 	data_for_print_f.corr_substrate = corr_substrate;
@@ -475,6 +469,11 @@ data_struct setup_FS()
 	data_for_print_f.joco_rod = joco_rod;
 	data_for_print_f.trml_rod = trml_rod;
 	data_for_print_f.corr_rod = corr_rod;
+
+
+
+	
+
     data_for_print_f.substrate_width = substrate_width;
 	data_for_print_f.substrate_length = substrate_length;
 	data_for_print_f.substrate_thickness = substrate_thickness;
@@ -484,6 +483,8 @@ data_struct setup_FS()
 	data_for_print_f.shift_y = shift_y;
 	data_for_print_f.shift_z = shift_z;
     data_for_print_f.CFl = CFL;
+
+	print_to_textfile(data_for_print_f);
 
 	//std::cout<<"moin"<<std::endl;
 
