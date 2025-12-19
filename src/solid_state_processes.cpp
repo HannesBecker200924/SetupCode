@@ -1,5 +1,5 @@
 #include "solid_state_processes.h"
-#include "print_textfile.h"
+#include "read_and_print.h"
 
 struct Point
 {
@@ -345,10 +345,10 @@ data_struct setup_FS()
 
 	// substrate min_max
 	max_min(n_substrate, points_vector_substrate, x_min_substrate, y_min_substrate, z_min_substrate,
-			x_max_substrate, y_max_substrate, z_max_substrate);
+	x_max_substrate, y_max_substrate, z_max_substrate);
 	// rod min_max
 	max_min(n_rod, points_vector_rod, x_min_rod, y_min_rod, z_min_rod,
-			x_max_rod, y_max_rod, z_max_rod);
+	x_max_rod, y_max_rod, z_max_rod);
 
 	/* cout << x_min_substrate << endl;
 	cout << y_min_substrate << endl;
@@ -374,7 +374,7 @@ data_struct setup_FS()
 
 	// 6.2
 	find_fixed(fixed, points_array, n, x_min_substrate, y_min_substrate,
-			   z_min_substrate, x_max_substrate, y_max_substrate);
+	z_min_substrate, x_max_substrate, y_max_substrate);
 
 	// 6.3
 	for (int i = 0; i < n; i++)
@@ -403,7 +403,6 @@ data_struct setup_FS()
 		h[i] = hdx;
 		T[i] = init_temp;
 	}
-
 
 	// bounding box
 	vec3_t bbmin;
@@ -469,11 +468,6 @@ data_struct setup_FS()
 	data_for_print_f.joco_rod = joco_rod;
 	data_for_print_f.trml_rod = trml_rod;
 	data_for_print_f.corr_rod = corr_rod;
-
-
-
-	
-
     data_for_print_f.substrate_width = substrate_width;
 	data_for_print_f.substrate_length = substrate_length;
 	data_for_print_f.substrate_thickness = substrate_thickness;
@@ -483,10 +477,7 @@ data_struct setup_FS()
 	data_for_print_f.shift_y = shift_y;
 	data_for_print_f.shift_z = shift_z;
     data_for_print_f.CFl = CFL;
-
 	print_to_textfile(data_for_print_f);
-
-	//std::cout<<"moin"<<std::endl;
 
 	return data_for_print_f;
 }
