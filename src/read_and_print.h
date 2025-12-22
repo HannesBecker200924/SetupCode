@@ -6,7 +6,11 @@
 #include<fstream>
 #include<string>
 
+void empty_textfile();
+
 void print_to_textfile(data_struct data_for_print_f);
+
+void read_textfile(data_struct& data_for_print_f);
 
 
 /*void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,

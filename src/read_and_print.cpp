@@ -1,6 +1,147 @@
 
 #include"read_and_print.h"
 
+const std::string filename = "Datasheet.txt";
+
+void empty_textfile(){
+
+    std::ofstream file(filename);  //file erstellen
+
+    if(!file){
+
+        std::cerr << "The file couldn't be created.\n";
+        
+        return;
+    }
+
+    //file << "" << << "\n";
+    file << "Datasheet\n";
+    file << "\n";
+    file << "Units:\n";
+    file << "\n";
+    file << "Length unit: " << "\n";
+    file << "Time unit: " << "\n";
+    file << "Mass unit: " << "\n";
+    file << "Temperature unit: " << "\n";
+    file << "Pressure unit: " << "\n";
+    file << "Energy unit: " << "\n";
+    file << "Power unit: " << "\n";
+    file << "Angle unit: " << "\n";
+    file << "\n";
+    file << "Point distanvce: " << "\n";
+    file << "Mass scaling: " << "\n";
+    file << "Smoothing length: " << "\n";
+    file << "Velocity scale factor: " << "\n";
+    //file << "Global Distance: " << "\n";
+    file << "\n";
+    file << "Velocitys:\n";
+    file << "\n";
+    file << "Velocity in x-direction: " << "\n";
+    file << "Velocity in y-direction: " << "\n";
+    file << "Velocity in z-irection: " << "\n";
+    file << "Rod velocity: " << "\n";
+    file << "Subtrate velocity: " << "\n";
+    file << "Angular velocity: " << "\n";
+    //file << "Velocity vector x" << "\n";
+    //file << "Velocity vector y" << "\n";
+    //file << "Velocity vector z" << "\n";
+    file << "\n";
+
+    file << "Constants for the substrate:\n";
+    file << "\n";
+
+    file << "Young's modulus: " << "\n";
+    file << "Poission's ratio: " << "\n";
+    file << "Reference density: " << "\n";
+    file << "Shear modulus: " << "\n";
+    file << "Bulk modululs: " << "\n";
+    file << "Particle mass: " << "\n";
+    file << "\n";
+
+    file << "Yield stress (A parameter): " << "\n";
+    file << "Hardening modulus: " << "\n";
+    file << "Strain rate sensitivity coefficient: " << "\n";
+    file << "Thermal softening exponent: " << "\n";
+    file << "Strain hardening exponent: " << "\n";
+    file << "Reference temperature: " << "\n";
+    file << "Melting temperature: " << "\n";
+    file << "Reference strain rate: " << "\n";
+    file << "Temperature clamping flag: " << "\n";
+    file << "\n";
+
+    file << "Specific heat capacity: " << "\n";
+    file << "Taylor–Quinney coefficient: " << "\n";
+    file << "Thermal efficiency: " << "\n";
+    file << "Thermal conductivity: " << "\n";
+    file << "Thermal diffusivity: " << "\n";
+    file << "Initial temperature: " << "\n";
+    file << "\n";
+
+    file << "Artificial viscosity coefficient: " << "\n";
+    file << "Artificial viscosity coefficient: " << "\n";
+    file << "Viscosity regularization parameter: " << "\n";
+    file << "XSPH correction factor: " << "\n";
+    file << "Stress regularization parameter: " << "\n";
+    //file << "Inverse smoothing length factor: " << "\n";
+    //file << "Normalized distance: " << "\n";
+    //file << "Kernel normalization factor: " "\n";
+    file << "Kernel weight (delta approximation): " << "\n";
+    file << "\n";
+    
+    file << "Constants for the rod:\n";
+    file << "\n";
+
+    file << "Young's modulus: " << "\n";
+    file << "Poission's ratio: " << "\n";
+    file << "Reference density: " << "\n";
+    file << "Shear modulus: " << "\n";
+    file << "Bulk modululs: " << "\n";
+    file << "Particle mass: " << "\n";
+    file << "\n";
+
+    file << "Yield stress (A parameter): " << "\n";
+    file << "Hardening modulus: " << "\n";
+    file << "Strain rate sensitivity coefficient: " << "\n";
+    file << "Thermal softening exponent: " << "\n";
+    file << "Strain hardening exponent: " << "\n";
+    file << "Reference temperature: " << "\n";
+    file << "Melting temperature: " << "\n";
+    file << "Reference strain rate: " << "\n";
+    file << "Temperature clamping flag: " << "\n";
+    file << "\n";
+
+    file << "Specific heat capacity: " << "\n";
+    file << "Taylor–Quinney coefficient: " << "\n";
+    file << "Thermal efficiency: " << "\n";
+    file << "Thermal conductivity: " << "\n";
+    file << "Thermal diffusivity: " << "\n";
+    file << "Initial temperature: " << "\n";
+    file << "\n";
+
+    file << "Artificial viscosity coefficient: " << "\n";
+    file << "Artificial viscosity coefficient: " << "\n";
+    file << "Viscosity regularization parameter: " << "\n";
+    file << "XSPH correction factor: " << "\n";
+    file << "Stress regularization parameter: " << "\n";
+    file << "Kernel weight (delta approximation): " << "\n";
+    file << "\n";
+
+    file << "Workpiece dimensions:\n";
+    file << "\n"; 
+    file << "Substrate width: " << "\n";
+    file << "Substrate lentgh: " << "\n";
+    file << "Substrate thickness: " << "\n";
+    file << "Rod diameter: " << "\n";
+    file << "Rod height: "<< "\n";
+    file << "Shift in x-direction: " << "\n";
+    file << "Shift in y-direction: " << "\n";
+    file << "Shift in z-direction: " << "\n";
+    file << "Courant–Friedrichs–Lewy (condition): " << "\n";
+    file << "\n";
+
+    file.close();
+}
+
 /*void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
     float_x &pressure_Unit, float_x &energy_Unit, float_x &power_Unit, float_x &angle_Unit,
     float_x &dz, float_x &ms, float_x &hdx, float_x &global_Vsf, float_x &global_dz,
@@ -12,8 +153,6 @@
    float_x &substrate_width, float_x &substrate_length, float_x &substrate_thickness, float_x &rod_diameter, float_x &rod_height,
    float_x& shift_x, float_x& shift_y, float_x& shift_z,
    float_x& CFl){
-
-    const std::string filename = "Datasheet.txt";
 
     std::ofstream file(filename);
 
@@ -43,8 +182,6 @@
 }*/
 
 void print_to_textfile(data_struct data_for_print_f){
-
-    const std::string filename = "Datasheet.txt";
 
     std::ofstream file(filename);  //file erstellen
 
@@ -182,3 +319,53 @@ void print_to_textfile(data_struct data_for_print_f){
 
     file.close();
 };
+
+
+void read_textfile(data_struct& data_for_print_f){
+
+    std::string line;
+
+    std::ifstream file(filename);
+
+    for (int i = 0; i < 4; ++i) {    //skip to 5 fifth line
+        std::getline(file, line);
+    }
+
+    std::getline(file, line);
+    size_t pos = line.find(':');    //find sucht in der aktuellen zeile den ersten doppelpunkt
+    if (pos != std::string::npos) { // wenn kein doppelpunkt gefunden wurde wird die zeile geskipped
+        std::string value = line.substr(pos + 1);  //speichert alles nach dem : als neuer string
+        data_for_print_f.length_Unit = float_x(std::stof(value));   //wandelt den string in float_x
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.time_Unit = float_x(std::stof(value));
+    } 
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.mass_Unit = float_x(std::stof(value));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -82,5 +82,5 @@ struct data_struct{
     float_x CFl;
 };
 
-data_struct setup_FS();
+void setup_FS();
 #endif  //SSP_H_ 
