@@ -478,15 +478,15 @@ void setup_FS()
 	float_x length_Unit = data_for_print_f.length_Unit;	// standard mm = 1     m = 1000
 	float_x time_Unit = data_for_print_f.time_Unit;   	// standard s = 1      min = 60
 	float_x mass_Unit = data_for_print_f.mass_Unit;		// standard g = 1      kg = 1000
-	float_x temp_Unit = 0.;		// standard C° = 0     Kelvin K = - 273.15
-	float_x pressure_Unit = 1.; // standard Pa = 1     GPa = 1,000,000,000
-	float_x energy_Unit = 1.;	// standard J = 1      kJ =  * 1000
-	float_x power_Unit = 1.;	// standard Watt = 1   kW = * 1000
-	float_x angle_Unit = 1.;	// standard Bogenmaß rad = 1    Grad = (pii/180)
+	float_x temp_Unit = data_for_print_f.temp_Unit;		// standard C° = 0     Kelvin K = - 273.15
+	float_x pressure_Unit = data_for_print_f.pressure_Unit; // standard Pa = 1     GPa = 1,000,000,000
+	float_x energy_Unit = data_for_print_f.energy_Unit;	// standard J = 1      kJ =  * 1000
+	float_x power_Unit = data_for_print_f.power_Unit;	// standard Watt = 1   kW = * 1000
+	float_x angle_Unit = data_for_print_f.angle_Unit;	// standard Bogenmaß rad = 1    Grad = (pii/180)
 
 	// bevor die konstanten definiert werden können müssen erst mass scaling und distance bestimmt werden
-	float_x dz = 1.0 * length_Unit;
-	float_x ms = 1.0;
+	float_x dz = data_for_print_f.dz * length_Unit;
+	float_x ms = data_for_print_f.ms;
 	float_x hdx = 1.7;
 	float_x init_temp = 20 + temp_Unit;
 	global_Vsf = 10;

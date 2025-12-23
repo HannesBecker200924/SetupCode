@@ -352,6 +352,232 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.mass_Unit = float_x(std::stof(value));
     }
 
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.temp_Unit = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.pressure_Unit = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.energy_Unit = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.power_Unit = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.angle_Unit = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.dz = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.ms = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.hdx = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.global_Vsf = float_x(std::stof(value));
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        std::getline(file, line);
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.vel_x = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.vel_y = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.vel_z = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.global_rod_vel = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.global_substrate_vel = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.global_wz = float_x(std::stof(value));
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        std::getline(file, line);
+    }
+    
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.E = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.nu = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.rho0 = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.G = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.K = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.phys_substrate.mass = float_x(std::stof(value));
+    }
+    
+    std::getline(file,line);
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.A = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.B = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.C = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.m = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.n = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.Tref = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.Tmelt = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.eps_dot_ref = float_x(std::stof(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.joco_substrate.clamp_temp = float_x(std::stof(value));
+    }
+
+    std::getline(file,line);
+
+    //hier weiter bei trml für substrate
+    
 
 
 
@@ -365,7 +591,30 @@ void read_textfile(data_struct& data_for_print_f){
 
 
 
+    /*
+    
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f. = float_x(std::stof(value));
+    }
+        
+    */
 
 
 
+
+
+    /*
+    
+    for (int i = 0; i < 3; ++i) {
+        std::getline(file, line);
+    }
+        
+    */
+
+
+
+    file.close();
 }
