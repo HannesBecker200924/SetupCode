@@ -9,7 +9,6 @@ struct Point
 };
 
 // Funktion um die points zu erstellen benötigt: nx partikel in x richtung, ny , dz, height_points und einen vector vom typ <Point>
-
 void generate_grid_points_substrate(int nx, int ny, float_x dz, float_x height_points, std::vector<Point> &points)
 {
 	// durch &points kann der Vektor der der Funktion übergeben wird selber überschrieben werden anstatt ihn zu kopeiren --> günstig
@@ -161,7 +160,7 @@ void setup_FS()
 
 	//empty_textfile();                          //for an empty sheet that has to be changed
 
-	/*//print datasheet with data explicit for AL5083H116
+	/*//print datasheet with data explicit for AL5083H116  !!does not work right now!!
 	// units converter values (umrechnungen einheiten)
 	// standard Einheiten: millimeter, sekunde, gramm, grad celsius,
 	float_x length_Unit = 1.;	// standard mm = 1     m = 1000
@@ -281,8 +280,8 @@ void setup_FS()
 
 	// 2.4
 	float_x shift_x = substrate_length / 4.0;
-	float_x shift_y;
-	float_x shift_z;
+	float_x shift_y = 0;
+	float_x shift_z = 0;
 
 	int nx = static_cast<int>(substrate_length / dz) + 1; // Partikel in x richtung
 	int ny = static_cast<int>(substrate_width / dz) + 1;  // static cast da wir ja ganze zahlen bei einer anzahl brauchen
@@ -436,6 +435,7 @@ void setup_FS()
     data_for_print_f.dz = dz;
 	data_for_print_f.ms = ms;
 	data_for_print_f.hdx = hdx;
+	data_for_print_f.init_temp = init_temp;
 	data_for_print_f.global_Vsf = global_Vsf;
 	data_for_print_f.global_dz = global_dz;
 	data_for_print_f.vel_x = vel_x;
@@ -470,7 +470,6 @@ void setup_FS()
 
 	print_to_textfile(data_for_print_f);       //for datasheet with data explicit for AL5083H116 */
 
-	
 	read_textfile(data_for_print_f);
 
 	// units converter values (umrechnungen einheiten)
@@ -487,17 +486,17 @@ void setup_FS()
 	// bevor die konstanten definiert werden können müssen erst mass scaling und distance bestimmt werden
 	float_x dz = data_for_print_f.dz * length_Unit;
 	float_x ms = data_for_print_f.ms;
-	float_x hdx = 1.7;
-	float_x init_temp = 20 + temp_Unit;
-	global_Vsf = 10;
+	float_x hdx = data_for_print_f.hdx;
+	float_x init_temp = data_for_print_f.init_temp + temp_Unit;
+	global_Vsf = data_for_print_f.global_Vsf;
 	global_dz = dz;
 
-	float_x vel_x = 0.0;
-	float_x vel_y = 0.0;
-	float_x vel_z = 0.0;
-	float_x global_rod_vel = (-2.0 * global_Vsf) * length_Unit / time_Unit; // negativ da nach unten und mal Vsf für den Faktor
-	float_x global_substrate_vel = 5. * global_Vsf * length_Unit / time_Unit;
-	float_x global_wz = (900. * 0.104719755 * global_Vsf) * angle_Unit / time_Unit; // Winkelgeschwindigkeit (rad/s)
+	float_x vel_x = data_for_print_f.vel_x;
+	float_x vel_y = data_for_print_f.vel_y;
+	float_x vel_z = data_for_print_f.vel_z;
+	float_x global_rod_vel = (data_for_print_f.global_rod_vel * global_Vsf) * length_Unit / time_Unit; // negativ da nach unten und mal Vsf für den Faktor
+	float_x global_substrate_vel = data_for_print_f.global_substrate_vel * global_Vsf * length_Unit / time_Unit;
+	float_x global_wz = (data_for_print_f.global_wz * 0.104719755 * global_Vsf) * angle_Unit / time_Unit; // Winkelgeschwindigkeit (rad/s)
 	glm::vec3 w(0.0, 0.0, global_wz);
 
 	int step = 0; // Anfangsposition
@@ -510,7 +509,7 @@ void setup_FS()
 	joco_constants joco_substrate = make_joco_constants();
 
 	// Für das verwendete aluminium: AL5083H116
-	phys_substrate.E = 70.e9 * pressure_Unit;
+	phys_substrate.E = data_for_print_f.phys_substrate.E * pressure_Unit;
 	phys_substrate.nu = 0.3;
 	phys_substrate.rho0 = 2700.0 * 1.0e-6 * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
 	phys_substrate.G = phys_substrate.E / (2. * (1. + phys_substrate.nu));
@@ -588,12 +587,12 @@ void setup_FS()
 	const float_x substrate_length = 100. * length_Unit;
 	const float_x substrate_thickness = 8.0 * length_Unit;
 	const float_x rod_diameter = 20.0 * length_Unit;
-	const float_x rod_height = 40.0 * length_Unit;
+	const float_x rod_height = data_for_print_f.rod_height * length_Unit;
 
 	// 2.4
 	float_x shift_x = substrate_length / 4.0;
-	float_x shift_y;
-	float_x shift_z;
+	float_x shift_y = 0;
+	float_x shift_z = 0;
 
 	int nx = static_cast<int>(substrate_length / dz) + 1; // Partikel in x richtung
 	int ny = static_cast<int>(substrate_width / dz) + 1;  // static cast da wir ja ganze zahlen bei einer anzahl brauchen
@@ -724,7 +723,10 @@ void setup_FS()
 	float_x c0_substrate = sqrt(phys_substrate.K / phys_substrate.rho0);
 	float_x c0_rod = sqrt(phys_rod.K / phys_rod.rho0);
 	float_x c0 = std::max(c0_substrate, c0_rod);
-	constexpr float_x CFL = 0.3;
+	const float_x CFL = data_for_print_f.CFl;
+
+	std::cout<<CFL<<std::endl;
+
 	float_x delta_t_max = CFL * hdx * dz / (sqrt(max_vel) + c0);
 	global_time_dt = 0.5 * delta_t_max;
 
@@ -734,7 +736,7 @@ void setup_FS()
 	delete[] rho;
 	delete[] T;
 	delete[] tool_p;
-	delete[] fixed;
+	delete[] fixed;   //*/
 
 	return;
 }

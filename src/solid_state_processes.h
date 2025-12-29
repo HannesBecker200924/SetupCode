@@ -49,6 +49,7 @@ struct data_struct{
     float_x dz;
 	float_x ms;
 	float_x hdx;
+	float_x init_temp;
 	float_x global_Vsf;
 	float_x global_dz;
 	float_x vel_x;

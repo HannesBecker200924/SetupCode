@@ -8,7 +8,7 @@
 
 void empty_textfile();
 
-void print_to_textfile(data_struct data_for_print_f);
+void print_to_textfile(data_struct data_for_print_f);   //wurde nicht definiert
 
 void read_textfile(data_struct& data_for_print_f);
 
