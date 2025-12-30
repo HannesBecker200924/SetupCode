@@ -54,9 +54,9 @@ void empty_textfile(){
     file << "Young's modulus: " << "\n";
     file << "Poission's ratio: " << "\n";
     file << "Reference density: " << "\n";
-    file << "Shear modulus: " << "\n";
-    file << "Bulk modululs: " << "\n";
-    file << "Particle mass: " << "\n";
+    //file << "Shear modulus: " << "\n";
+    //file << "Bulk modululs: " << "\n";
+    //file << "Particle mass: " << "\n";
     file << "\n";
 
     file << "Yield stress (A parameter): " << "\n";
@@ -74,8 +74,8 @@ void empty_textfile(){
     file << "Taylor–Quinney coefficient: " << "\n";
     file << "Thermal efficiency: " << "\n";
     file << "Thermal conductivity: " << "\n";
-    file << "Thermal diffusivity: " << "\n";
-    file << "Initial temperature: " << "\n";
+    //file << "Thermal diffusivity: " << "\n";
+    //file << "Initial temperature: " << "\n";
     file << "\n";
 
     file << "Artificial viscosity coefficient: " << "\n";
@@ -86,7 +86,7 @@ void empty_textfile(){
     //file << "Inverse smoothing length factor: " << "\n";
     //file << "Normalized distance: " << "\n";
     //file << "Kernel normalization factor: " "\n";
-    file << "Kernel weight (delta approximation): " << "\n";
+    //file << "Kernel weight (delta approximation): " << "\n";
     file << "\n";
     
     file << "Constants for the rod:\n";
@@ -95,9 +95,9 @@ void empty_textfile(){
     file << "Young's modulus: " << "\n";
     file << "Poission's ratio: " << "\n";
     file << "Reference density: " << "\n";
-    file << "Shear modulus: " << "\n";
-    file << "Bulk modululs: " << "\n";
-    file << "Particle mass: " << "\n";
+    //file << "Shear modulus: " << "\n";
+    //file << "Bulk modululs: " << "\n";
+    //file << "Particle mass: " << "\n";
     file << "\n";
 
     file << "Yield stress (A parameter): " << "\n";
@@ -115,8 +115,8 @@ void empty_textfile(){
     file << "Taylor–Quinney coefficient: " << "\n";
     file << "Thermal efficiency: " << "\n";
     file << "Thermal conductivity: " << "\n";
-    file << "Thermal diffusivity: " << "\n";
-    file << "Initial temperature: " << "\n";
+    //file << "Thermal diffusivity: " << "\n";
+    //file << "Initial temperature: " << "\n";
     file << "\n";
 
     file << "Artificial viscosity coefficient: " << "\n";
@@ -496,26 +496,26 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.phys_substrate.rho0 = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_substrate.G = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_substrate.K = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_substrate.mass = float_x(std::stod(value));
-    }
+    }*/
     
     std::getline(file,line);
 
@@ -612,19 +612,19 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.trml_substrate.k = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.trml_substrate.alpha = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.trml_substrate.T_init = float_x(std::stod(value));
-    }
+    }*/
 
     std::getline(file,line);
 
@@ -633,7 +633,7 @@ void read_textfile(data_struct& data_for_print_f){
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.corr_substrate.alpha = float_x(std::stod(value));
-    }    
+    }  
 
     std::getline(file, line);
     pos = line.find(':');
@@ -663,12 +663,12 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.corr_substrate.stresseps = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.corr_substrate.wdeltap = float_x(std::stod(value));
-    }
+    }*/
 
     for (int i = 0; i < 3; ++i) {
         std::getline(file, line);
@@ -696,26 +696,26 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.phys_rod.rho0 = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_rod.G = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_rod.K = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.phys_rod.mass = float_x(std::stod(value));
-    }
+    }*/
     
     std::getline(file,line);
 
@@ -812,19 +812,19 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.trml_rod.k = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.trml_rod.alpha = float_x(std::stod(value));
-    }
+    }*/
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.trml_rod.T_init = float_x(std::stod(value));
-    }
+    }*/
 
     std::getline(file,line);
 

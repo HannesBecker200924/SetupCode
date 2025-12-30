@@ -508,36 +508,35 @@ void setup_FS()
 	corr_constants corr_substrate = make_corr_constants();
 	joco_constants joco_substrate = make_joco_constants();
 
-	// Für das verwendete aluminium: AL5083H116
 	phys_substrate.E = data_for_print_f.phys_substrate.E * pressure_Unit;
-	phys_substrate.nu = 0.3;
-	phys_substrate.rho0 = 2700.0 * 1.0e-6 * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
+	phys_substrate.nu = data_for_print_f.phys_substrate.nu;
+	phys_substrate.rho0 = data_for_print_f.phys_substrate.rho0 * 1.0e-6 * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
 	phys_substrate.G = phys_substrate.E / (2. * (1. + phys_substrate.nu));
 	phys_substrate.K = 2.0 * phys_substrate.G * (1 + phys_substrate.nu) / (3 * (1 - 2 * phys_substrate.nu));
 	phys_substrate.mass = dz * dz * dz * phys_substrate.rho0;
 
-	joco_substrate.A = 167.e6 * pressure_Unit;
-	joco_substrate.B = 0 * pressure_Unit;
-	joco_substrate.C = 0.001;
-	joco_substrate.m = 0.859;
-	joco_substrate.n = 0;
-	joco_substrate.Tref = 20 + temp_Unit;
-	joco_substrate.Tmelt = 620 + temp_Unit;
-	joco_substrate.eps_dot_ref = 1. / time_Unit;
-	joco_substrate.clamp_temp = 1;
+	joco_substrate.A = data_for_print_f.joco_substrate.A * pressure_Unit;
+	joco_substrate.B = data_for_print_f.joco_substrate.B * pressure_Unit;
+	joco_substrate.C = data_for_print_f.joco_substrate.C;
+	joco_substrate.m = data_for_print_f.joco_substrate.m;
+	joco_substrate.n = data_for_print_f.joco_substrate.n;
+	joco_substrate.Tref = data_for_print_f.joco_substrate.Tref + temp_Unit;
+	joco_substrate.Tmelt = data_for_print_f.joco_substrate.Tmelt + temp_Unit;
+	joco_substrate.eps_dot_ref = data_for_print_f.joco_substrate.eps_dot_ref / time_Unit;
+	joco_substrate.clamp_temp = data_for_print_f.joco_substrate.clamp_temp;
 
-	trml_substrate.cp = ((910. * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
-	trml_substrate.tq = 0.9;
-	trml_substrate.eta = 0.9;									
-	trml_substrate.k = 117. * 1.0e6 * global_Vsf * power_Unit / length_Unit; // wärmeleitfähigkeit
+	trml_substrate.cp = ((data_for_print_f.trml_substrate.cp * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
+	trml_substrate.tq = data_for_print_f.trml_substrate.tq;
+	trml_substrate.eta = data_for_print_f.trml_substrate.eta;									
+	trml_substrate.k = data_for_print_f.trml_substrate.k * 1.0e6 * global_Vsf * power_Unit / length_Unit; // wärmeleitfähigkeit
 	trml_substrate.alpha = trml_substrate.k / (phys_substrate.rho0 * trml_substrate.cp);
 	trml_substrate.T_init = joco_substrate.Tref + temp_Unit; // referenztemperatur
 
-	corr_substrate.alpha = 1.;
-	corr_substrate.beta = 1.;
-	corr_substrate.eta = 0.1;
-	corr_substrate.xspheps = 0.01;
-	corr_substrate.stresseps = 0.3;
+	corr_substrate.alpha = data_for_print_f.corr_substrate.alpha;
+	corr_substrate.beta = data_for_print_f.corr_substrate.beta;
+	corr_substrate.eta = data_for_print_f.corr_substrate.eta;
+	corr_substrate.xspheps = data_for_print_f.corr_substrate.xspheps;
+	corr_substrate.stresseps = data_for_print_f.corr_substrate.stresseps;
 	float_x h1 = 1. / (hdx * dz);
 	float_x q = dz * h1;
 	float_x fac = (M_1_PI)*h1 * h1 * h1;
@@ -549,44 +548,42 @@ void setup_FS()
 	trml_constants trml_rod = make_trml_constants();
 	corr_constants corr_rod = make_corr_constants();
 
-	// Für das verwendete aluminium: AL5083H116
-
-	phys_rod.E = 70.e9 * pressure_Unit;
-	phys_rod.rho0 = (2700.0 * 1.0e-6) * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
-	phys_rod.nu = 0.3;
+	phys_rod.E = data_for_print_f.phys_rod.E * pressure_Unit;
+	phys_rod.nu = data_for_print_f.phys_rod.nu;
+	phys_rod.rho0 = data_for_print_f.phys_rod.rho0 * 1.0e-6 * ms * mass_Unit / (length_Unit * length_Unit * length_Unit);
 	phys_rod.G = phys_rod.E / (2. * (1. + phys_rod.nu));
 	phys_rod.K = 2.0 * phys_rod.G * (1 + phys_rod.nu) / (3 * (1 - 2 * phys_rod.nu));
 	phys_rod.mass = dz * dz * dz * phys_rod.rho0;
 
-	joco_rod.A = 167.e6 * pressure_Unit;
-	joco_rod.B = 0 * pressure_Unit;
-	joco_rod.C = 0.001;
-	joco_rod.m = 0.859;
-	joco_rod.n = 0;
-	joco_rod.Tref = 20 + temp_Unit;
-	joco_rod.Tmelt = 620 + temp_Unit;
-	joco_rod.eps_dot_ref = 1. / time_Unit;
-	joco_rod.clamp_temp = 1.;
+	joco_rod.A = data_for_print_f.joco_rod.A * pressure_Unit;
+	joco_rod.B = data_for_print_f.joco_rod.B * pressure_Unit;
+	joco_rod.C = data_for_print_f.joco_rod.C;
+	joco_rod.m = data_for_print_f.joco_rod.m;
+	joco_rod.n = data_for_print_f.joco_rod.n;
+	joco_rod.Tref = data_for_print_f.joco_rod.Tref + temp_Unit;
+	joco_rod.Tmelt = data_for_print_f.joco_rod.Tmelt + temp_Unit;
+	joco_rod.eps_dot_ref = data_for_print_f.joco_rod.eps_dot_ref / time_Unit;
+	joco_rod.clamp_temp = data_for_print_f.joco_rod.clamp_temp;
 
-	trml_rod.cp = ((910. * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
-	trml_rod.tq = 0.9;
-	trml_rod.eta = 0.9;												
-	trml_rod.k = 117. * 1.0e6 * global_Vsf * power_Unit / mass_Unit; // wärmeleitfähigkeit
+	trml_rod.cp = ((data_for_print_f.trml_rod.cp * 1.0e6) / ms) * energy_Unit / mass_Unit; // wärmekapazität
+	trml_rod.tq = data_for_print_f.trml_rod.tq;
+	trml_rod.eta = data_for_print_f.trml_rod.eta;												
+	trml_rod.k = data_for_print_f.trml_rod.k * 1.0e6 * global_Vsf * power_Unit / mass_Unit; // wärmeleitfähigkeit
 	trml_rod.alpha = trml_rod.k / (phys_rod.rho0 * trml_rod.cp);
 	trml_rod.T_init = joco_rod.Tref + temp_Unit; // referenztemperatur
 
-	corr_rod.alpha = 1.;
-	corr_rod.beta = 1.;
-	corr_rod.eta = 0.1;
-	corr_rod.xspheps = 0.01;
-	corr_rod.stresseps = 0.3;
+	corr_rod.alpha = data_for_print_f.corr_rod.alpha;
+	corr_rod.beta = data_for_print_f.corr_rod.beta;
+	corr_rod.eta = data_for_print_f.corr_rod.eta;
+	corr_rod.xspheps = data_for_print_f.corr_rod.xspheps;
+	corr_rod.stresseps = data_for_print_f.corr_rod.stresseps;
 	corr_rod.wdeltap = fac * (1 - 1.5 * q * q * (1 - 0.5 * q));
 
 	// 2.3   substrate dimensionen
-	const float_x substrate_width = 50. * length_Unit;
-	const float_x substrate_length = 100. * length_Unit;
-	const float_x substrate_thickness = 8.0 * length_Unit;
-	const float_x rod_diameter = 20.0 * length_Unit;
+	const float_x substrate_width = data_for_print_f.substrate_width * length_Unit;
+	const float_x substrate_length = data_for_print_f.substrate_length * length_Unit;
+	const float_x substrate_thickness = data_for_print_f.substrate_thickness * length_Unit;
+	const float_x rod_diameter = data_for_print_f.rod_diameter * length_Unit;
 	const float_x rod_height = data_for_print_f.rod_height * length_Unit;
 
 	// 2.4
@@ -724,9 +721,6 @@ void setup_FS()
 	float_x c0_rod = sqrt(phys_rod.K / phys_rod.rho0);
 	float_x c0 = std::max(c0_substrate, c0_rod);
 	const float_x CFL = data_for_print_f.CFl;
-
-	std::cout<<CFL<<std::endl;
-
 	float_x delta_t_max = CFL * hdx * dz / (sqrt(max_vel) + c0);
 	global_time_dt = 0.5 * delta_t_max;
 
