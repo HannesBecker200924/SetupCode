@@ -22,9 +22,6 @@ void empty_textfile(){
     file << "Time unit: " << "\n";
     file << "Mass unit: " << "\n";
     file << "Temperature unit: " << "\n";
-    file << "Pressure unit: " << "\n";
-    file << "Energy unit: " << "\n";
-    file << "Power unit: " << "\n";
     file << "Angle unit: " << "\n";
     file << "\n";
     file << "Point distance: " << "\n";
@@ -137,8 +134,8 @@ void empty_textfile(){
     file << "Substrate thickness: " << "\n";
     file << "Rod diameter: " << "\n";
     file << "Rod height: "<< "\n";
-    //file << "Shift in x-direction: " << "\n";
-    //file << "Shift in y-direction: " << "\n";
+    file << "Shift in x-direction: " << "\n";
+    file << "Shift in y-direction: " << "\n";
     //file << "Shift in z-direction: " << "\n";
     file << "Courant–Friedrichs–Lewy (condition): " << "\n";
     file << "\n";
@@ -321,27 +318,6 @@ void read_textfile(data_struct& data_for_print_f){
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.temp_Unit = float_x(std::stod(value));
-    }
-
-    std::getline(file, line);
-    pos = line.find(':');
-    if (pos != std::string::npos) {
-        std::string value = line.substr(pos + 1);
-        data_for_print_f.pressure_Unit = float_x(std::stod(value));
-    }
-
-    std::getline(file, line);
-    pos = line.find(':');
-    if (pos != std::string::npos) {
-        std::string value = line.substr(pos + 1);
-        data_for_print_f.energy_Unit = float_x(std::stod(value));
-    }
-
-    std::getline(file, line);
-    pos = line.find(':');
-    if (pos != std::string::npos) {
-        std::string value = line.substr(pos + 1);
-        data_for_print_f.power_Unit = float_x(std::stod(value));
     }
 
     std::getline(file, line);
@@ -897,7 +873,7 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.rod_height = float_x(std::stod(value));
     }
 
-    /*std::getline(file, line);    //shift
+    std::getline(file, line);    //shift
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
@@ -911,7 +887,7 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.shift_y = float_x(std::stod(value));
     }
 
-    std::getline(file, line);
+    /*std::getline(file, line);
     pos = line.find(':');
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
@@ -926,4 +902,113 @@ void read_textfile(data_struct& data_for_print_f){
     }
     
     file.close();
+}
+
+void read_textfile_new(data_struct& data_for_print_f){   //nicht fertig
+
+    bool length_Unit_flag = false;          // es sind 40 Variablen  
+	bool time_Unit_flag = false;
+	bool mass_Unit_flag = false;
+	bool temp_Unit_flag = false;
+	bool angle_Unit_flag = false;
+    bool dz_flag = false;
+	bool ms_flag = false;
+	bool hdx_flag = false;
+	bool init_temp_flag = false;
+	bool global_Vsf_flag = false;
+	bool global_dz_flag = false;
+	bool vel_x_flag = false;
+	bool vel_y_flag = false;
+	bool vel_z_flag = false;
+	bool global_rod_vel_flag = false;
+	bool global_substrate_vel_flag = false;
+	bool global_wz_flag = false; 
+	bool global_time_final_flag = false;
+	bool h1_flag = false;
+	bool q_flag = false;
+	bool fac_flag = false;
+
+
+    bool phys_substrate_flag_E = false;
+    bool phys_substrate_flag_nu = false;
+    bool phys_substrate_flag_rho0 = false;
+    bool phys_substrate_flag_G = false;
+    bool phys_substrate_flag_K = false;
+    bool phys_substrate_flag_mass = false;
+    
+	bool trml_substrate_flag_cp = false;
+    bool trml_substrate_flag_tq = false;
+    bool trml_substrate_flag_eta = false;
+    bool trml_substrate_flag_k = false;
+    bool trml_substrate_flag_alpha = false;
+    bool trml_substrate_flag_init = false;
+
+
+
+    //hier weiter die flags machen
+
+
+
+
+	bool corr_substrate_flag = false;
+	bool joco_substrate_flag = false;
+
+	bool heco_wp_to_air_flag = false;
+	bool heco_wp_to_metal_flag = false;
+
+    bool phys_rod_flag = false;
+	bool joco_rod_flag = false;
+	bool trml_rod_flag = false;
+	bool corr_rod_flag = false;
+
+
+
+    bool substrate_width_flag = false;
+	bool substrate_length_flag = false;
+	bool substrate_thickness_flag = false;
+	bool rod_diameter_flag = false;
+	bool rod_height_flag = false;
+    bool shift_x_flag = false;
+	bool shift_y_flag = false;
+	bool shift_z_flag = false;
+    bool CFl_flag = false;
+
+
+
+    std::string testfile = "test.txt";
+    std::ifstream file(testfile);
+    std::string line;
+
+
+    while(std::getline(file,line)) {
+        
+        std::getline(file,line);
+        size_t pos = line.find(':');
+        if (pos != std::string::npos) {
+    
+            std::string keyword = line.substr(0, pos);
+            std::string value = line.substr(pos + 1);
+    
+            if (keyword == "Time unit"){
+
+                data_for_print_f.time_Unit = double(std::stod(value));
+
+
+                time_Unit_flag = true;
+            }
+            
+        }
+
+    }
+
+
+
+
+
+    if(time_Unit_flag == false){
+        printf("Time unit is missing. Copy in file: Time unit: your_value\n");
+    }
+    //flag muss noch fuer alle anderen werte gemacht werden
+
+
 }

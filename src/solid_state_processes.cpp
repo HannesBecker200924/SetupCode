@@ -152,15 +152,15 @@ void setup_FS()
 	read_textfile(data_for_print_f);
 
 	// units converter values (umrechnungen einheiten)
-	// standard Einheiten: millimeter, sekunde, gramm, grad celsius,
-	float_x length_Unit = data_for_print_f.length_Unit; // standard mm = 1     m = 1000
+	// standard Einheiten: meter, sekunde, gramm, grad celsius,
+	float_x length_Unit = data_for_print_f.length_Unit; // standard m = 1     mm = 0.001
 	float_x time_Unit = data_for_print_f.time_Unit;		// standard s = 1      min = 60
-	float_x mass_Unit = data_for_print_f.mass_Unit;		// standard g = 1      kg = 1000
+	float_x mass_Unit = data_for_print_f.mass_Unit;		// standard kg = 1      g = 0.001
 	float_x temp_Unit = data_for_print_f.temp_Unit;		// standard C° = 0     Kelvin K = - 273.15
 
-	float_x pressure_Unit = data_for_print_f.pressure_Unit; // standard Pa = 1     GPa = 1,000,000,000
-	float_x energy_Unit = data_for_print_f.energy_Unit;		// standard J = 1      kJ =  * 1000
-	float_x power_Unit = data_for_print_f.power_Unit;		// standard Watt = 1   kW = * 1000
+	float_x pressure_Unit = mass_Unit / (time_Unit * time_Unit * length_Unit);
+	float_x energy_Unit = length_Unit * length_Unit / (time_Unit * time_Unit);
+	float_x power_Unit = mass_Unit * length_Unit * length_Unit / (time_Unit * time_Unit * time_Unit);
 	float_x angle_Unit = data_for_print_f.angle_Unit;		// standard Bogenmaß rad = 1    Grad = (pii/180)
 
 	// bevor die konstanten definiert werden können müssen erst mass scaling und distance bestimmt werden
@@ -271,8 +271,12 @@ void setup_FS()
 	const float_x rod_height = data_for_print_f.rod_height * length_Unit;
 
 	// 2.4
-	float_x shift_x = substrate_length / 4.0;
-	float_x shift_y = 0;
+	//float_x shift_x = substrate_length / 4.0;
+
+	//mit shift soll der user die moeglichkeit haben die rod an einer bestimmten stelle zu starten
+	//dabei gib er dem Abstand vom linken rand an Bsp: sub lentgh = 100 und er will bei 1/4 die rod starten dann gibt er 25 ein 
+	float_x shift_x = data_for_print_f.substrate_length / 2 - data_for_print_f.shift_x;
+	float_x shift_y = data_for_print_f.substrate_width / 2 - data_for_print_f.shift_y;
 	float_x shift_z = 0;
 
 	int nx = static_cast<int>(substrate_length / dz) + 1; // Partikel in x richtung
@@ -306,11 +310,12 @@ void setup_FS()
 	unsigned int n_substrate = points_vector_substrate.size();
 	unsigned int n_rod = points_vector_rod.size();
 	unsigned int n = n_substrate + n_rod;
-	for (int i = 0; i < n_substrate; i++)
+	for (int i = 0; i < n_substrate; i++)  //if-abfrage is eig unnoetig
 	{
 		if (points_vector_substrate[i].z <= substrate_thickness)
 		{
 			points_vector_substrate[i].x += shift_x;
+			points_vector_substrate[i].y += shift_y;
 		}
 	}
 

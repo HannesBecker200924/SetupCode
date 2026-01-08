@@ -42,11 +42,6 @@ struct data_struct{
 	float_x time_Unit;
 	float_x mass_Unit;
 	float_x temp_Unit;
-
-    float_x pressure_Unit; 
-	float_x energy_Unit;
-	float_x power_Unit;
-	
 	float_x angle_Unit;
     float_x dz;
 	float_x ms;
@@ -60,8 +55,8 @@ struct data_struct{
 	float_x global_rod_vel;
 	float_x global_substrate_vel;
 	float_x global_wz; 
-	glm::vec3 w; 
-    int step;
+	//glm::vec3 w; 
+    //int step;
 	float_x global_time_final;
 	float_x h1;
 	float_x q;
