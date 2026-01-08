@@ -94,5 +94,6 @@ struct geom_constants {
 geom_constants make_geom_constants();
 
 extern float_x pii;
+extern float_x revolution_to_rad;
 
 #endif /* CONSTANTS_STRUCTS_H_ */

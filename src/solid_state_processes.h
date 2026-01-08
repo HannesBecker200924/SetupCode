@@ -42,9 +42,11 @@ struct data_struct{
 	float_x time_Unit;
 	float_x mass_Unit;
 	float_x temp_Unit;
+
     float_x pressure_Unit; 
 	float_x energy_Unit;
 	float_x power_Unit;
+	
 	float_x angle_Unit;
     float_x dz;
 	float_x ms;
@@ -68,6 +70,10 @@ struct data_struct{
 	trml_constants trml_substrate;
 	corr_constants corr_substrate;
 	joco_constants joco_substrate;
+
+	float_x heco_wp_to_air;
+	float_x heco_wp_to_metal;
+
     phys_constants phys_rod;
 	joco_constants joco_rod;
 	trml_constants trml_rod;

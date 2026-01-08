@@ -1,4 +1,3 @@
-
 #include"read_and_print.h"
 
 const std::string filename = "Datasheet.txt";
@@ -28,18 +27,19 @@ void empty_textfile(){
     file << "Power unit: " << "\n";
     file << "Angle unit: " << "\n";
     file << "\n";
-    file << "Point distanvce: " << "\n";
+    file << "Point distance: " << "\n";
     file << "Mass scaling: " << "\n";
     file << "Smoothing length: " << "\n";
     file << "Initial temperature: " << "\n";
     file << "Velocity scale factor: " << "\n";
+    file << "Process time: " << "\n";
     //file << "Global Distance: " << "\n";
     file << "\n";
     file << "Velocitys:\n";
     file << "\n";
     file << "Velocity in x-direction: " << "\n";
     file << "Velocity in y-direction: " << "\n";
-    file << "Velocity in z-irection: " << "\n";
+    file << "Velocity in z-direction: " << "\n";
     file << "Rod velocity: " << "\n";
     file << "Subtrate velocity: " << "\n";
     file << "Angular velocity: " << "\n";
@@ -88,6 +88,9 @@ void empty_textfile(){
     //file << "Kernel normalization factor: " "\n";
     //file << "Kernel weight (delta approximation): " << "\n";
     file << "\n";
+    file << "Heat convection workpiece to air: " << "\n";
+    file << "Heat convection workpiece to metal: " << "\n";
+    file << "\n";
     
     file << "Constants for the rod:\n";
     file << "\n";
@@ -130,7 +133,7 @@ void empty_textfile(){
     file << "Workpiece dimensions:\n";
     file << "\n"; 
     file << "Substrate width: " << "\n";
-    file << "Substrate lentgh: " << "\n";
+    file << "Substrate length: " << "\n";
     file << "Substrate thickness: " << "\n";
     file << "Rod diameter: " << "\n";
     file << "Rod height: "<< "\n";
@@ -143,46 +146,7 @@ void empty_textfile(){
     file.close();
 }
 
-/*void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
-    float_x &pressure_Unit, float_x &energy_Unit, float_x &power_Unit, float_x &angle_Unit,
-    float_x &dz, float_x &ms, float_x &hdx, float_x &global_Vsf, float_x &global_dz,
-    float_x& vel_x, float_x& vel_y, float_x& vel_z, float_x &global_rod_vel, float_x &global_substrate_vel, 
-    float_x &global_wz, glm::vec3 &w, 
-    int &step, float_x &global_time_final,
-    phys_constants& phys_substrate,trml_constants& trml_substrate,corr_constants& corr_substrate,joco_constants& joco_substrate,
-    phys_constants& phys_rod, joco_constants& joco_rod, trml_constants& trml_rod, corr_constants& corr_rod,
-   float_x &substrate_width, float_x &substrate_length, float_x &substrate_thickness, float_x &rod_diameter, float_x &rod_height,
-   float_x& shift_x, float_x& shift_y, float_x& shift_z,
-   float_x& CFl){
-
-    std::ofstream file(filename);
-
-    if(!file){
-
-        std::cerr << "The file couldn't be created.\n";
-        
-        return;
-    }
-
-    //file << "" << << "\n";
-    file << "Datasheet\n";
-    file << "\n";
-    file << "Units:\n";
-    file << "\n";
-    file << "length Unit: " << length_Unit << "\n";
-    file << "Time Unit: " << time_Unit << "\n";
-    file << "Mass Unit: " << mass_Unit << "\n";
-    file << "Temperature Unit: " << temp_Unit << "\n";
-    file << "Pressure Unit: " << pressure_Unit << "\n";
-    file << "Energy Unit" << energy_Unit << "\n";
-    file << "" << << "\n";
-
-
-
-    return;
-}
-
-void print_to_textfile(data_struct data_for_print_f){
+/*void print_to_textfile(data_struct data_for_print_f){
 
     std::ofstream file(filename);  //file erstellen
 
@@ -424,6 +388,13 @@ void read_textfile(data_struct& data_for_print_f){
         data_for_print_f.global_Vsf = float_x(std::stod(value));
     }
 
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.global_time_final = float_x(std::stod(value));
+    }
+
     for (int i = 0; i < 3; ++i) {
         std::getline(file, line);
     }
@@ -661,6 +632,22 @@ void read_textfile(data_struct& data_for_print_f){
     if (pos != std::string::npos) {
         std::string value = line.substr(pos + 1);
         data_for_print_f.corr_substrate.stresseps = float_x(std::stod(value));
+    }
+
+    std::getline(file,line);
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.heco_wp_to_air= float_x(std::stod(value));
+    }
+
+    std::getline(file, line);
+    pos = line.find(':');
+    if (pos != std::string::npos) {
+        std::string value = line.substr(pos + 1);
+        data_for_print_f.heco_wp_to_metal = float_x(std::stod(value));
     }
 
     /*std::getline(file, line);

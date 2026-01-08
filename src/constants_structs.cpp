@@ -49,5 +49,6 @@ geom_constants make_geom_constants() {
 }
 
 float_x pii = 3.14159265;
+float_x revolution_to_rad = 0.10471976;
 
 
