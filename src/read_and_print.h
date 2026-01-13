@@ -12,6 +12,7 @@ void print_to_textfile(data_struct data_for_print_f);   //wurde nicht definiert
 
 void read_textfile(data_struct& data_for_print_f);
 
+void read_textfile_new(data_struct& data_for_print_f);
 
 /*void print_to_textfile(float_x& length_Unit, float_x& time_Unit, float_x &mass_Unit, float_x &temp_Unit,
 float_x &pressure_Unit, float_x &energy_Unit, float_x &power_Unit, float_x &angle_Unit,

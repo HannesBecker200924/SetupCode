@@ -58,9 +58,9 @@ struct data_struct{
 	//glm::vec3 w; 
     //int step;
 	float_x global_time_final;
-	float_x h1;
-	float_x q;
-	float_x fac;
+	//float_x h1;
+	//float_x q;
+	//float_x fac;
     phys_constants phys_substrate;
 	trml_constants trml_substrate;
 	corr_constants corr_substrate;
