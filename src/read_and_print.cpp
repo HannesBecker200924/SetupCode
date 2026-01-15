@@ -49,7 +49,7 @@ void empty_textfile(){
     file << "\n";
 
     file << "Young's modulus (substrate): " << "\n";
-    file << "Poission's ratio (substrate): " << "\n";
+    file << "Poisson's ratio (substrate): " << "\n";
     file << "Reference density (substrate): " << "\n";
     //file << "Shear modulus: " << "\n";
     //file << "Bulk modululs: " << "\n";
@@ -93,7 +93,7 @@ void empty_textfile(){
     file << "\n";
 
     file << "Young's modulus (rod): " << "\n";
-    file << "Poission's ratio (rod): " << "\n";
+    file << "Poisson's ratio (rod): " << "\n";
     file << "Reference density (rod): " << "\n";
     //file << "Shear modulus (rod): " << "\n";
     //file << "Bulk modululs (rod): " << "\n";
@@ -190,7 +190,7 @@ void empty_textfile(){
     file << "\n";
 
     file << "Young's modulus: " << data_for_print_f.phys_substrate.E << "\n";
-    file << "Poission's ratio: " << data_for_print_f.phys_substrate.nu << "\n";
+    file << "Poisson's ratio: " << data_for_print_f.phys_substrate.nu << "\n";
     file << "Reference density: " << data_for_print_f.phys_substrate.rho0 << "\n";
     file << "Shear modulus: " << data_for_print_f.phys_substrate.G << "\n";
     file << "Bulk modululs: " << data_for_print_f.phys_substrate.K << "\n";
@@ -231,7 +231,7 @@ void empty_textfile(){
     file << "\n";
 
     file << "Young's modulus: " << data_for_print_f.phys_rod.E << "\n";
-    file << "Poission's ratio: " << data_for_print_f.phys_rod.nu << "\n";
+    file << "Poisson's ratio: " << data_for_print_f.phys_rod.nu << "\n";
     file << "Reference density: " << data_for_print_f.phys_rod.rho0 << "\n";
     file << "Shear modulus: " << data_for_print_f.phys_rod.G << "\n";
     file << "Bulk modululs: " << data_for_print_f.phys_rod.K << "\n";
@@ -907,7 +907,7 @@ void read_textfile(data_struct& data_for_print_f){
     file.close();
 }
 
-void read_textfile_new(data_struct& data_for_print_f){
+void read_textfile_HaBe(data_struct& data_for_print_f){
 
     int number_of_true_flags = 0;
 
@@ -922,15 +922,15 @@ void read_textfile_new(data_struct& data_for_print_f){
 	bool hdx_flag = false;
 	bool init_temp_flag = false;
 	bool global_Vsf_flag = false;
-	bool global_dz_flag = false;
+    bool global_time_final_flag = false;
+	
 	bool vel_x_flag = false;
 	bool vel_y_flag = false;
 	bool vel_z_flag = false;
 	bool global_rod_vel_flag = false;
 	bool global_substrate_vel_flag = false;
 	bool global_wz_flag = false; 
-	bool global_time_final_flag = false;
-
+	
     bool phys_substrate_flag_E = false;
     bool phys_substrate_flag_nu = false;
     bool phys_substrate_flag_rho0 = false;
@@ -991,9 +991,10 @@ void read_textfile_new(data_struct& data_for_print_f){
 	bool rod_height_flag = false;
     bool shift_x_flag = false;
 	bool shift_y_flag = false;
-	//bool shift_z_flag = false;
     bool CFl_flag = false;
 
+    //bool global_dz_flag = false;
+    //bool shift_z_flag = false;
 
     std::ifstream file(filename);
     std::string line;
@@ -1190,12 +1191,12 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Poission's ratio (substrate)"){
+            else if (keyword == "Poisson's ratio (substrate)"){
 
                 data_for_print_f.phys_substrate.nu = double(std::stod(value));
 
 
-                phys_rod_flag_nu = true;
+                phys_substrate_flag_nu = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1205,7 +1206,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.phys_substrate.rho0 = double(std::stod(value));
 
 
-                phys_rod_flag_rho0 = true;
+                phys_substrate_flag_rho0 = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1217,7 +1218,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.A = double(std::stod(value));
 
 
-                joco_rod_flag_A = true;
+                joco_substrate_flag_A = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1227,7 +1228,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.B = double(std::stod(value));
 
 
-                joco_rod_flag_B = true;
+                joco_substrate_flag_B = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1237,7 +1238,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.C = double(std::stod(value));
 
 
-                joco_rod_flag_C = true;
+                joco_substrate_flag_C = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1247,17 +1248,17 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.m = double(std::stod(value));
 
 
-                joco_rod_flag_m = true;
+                joco_substrate_flag_m = true;
                 
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Strain hardening exponent (substrate):"){
+            else if (keyword == "Strain hardening exponent (substrate)"){
 
                 data_for_print_f.joco_substrate.n = double(std::stod(value));
 
 
-                joco_rod_flag_n = true;
+                joco_substrate_flag_n = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1267,7 +1268,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.Tref = double(std::stod(value));
 
 
-                joco_rod_flag_Tref = true;
+                joco_substrate_flag_Tref = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1277,7 +1278,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.Tmelt = double(std::stod(value));
 
 
-                joco_rod_flag_Tmelt = true;
+                joco_substrate_flag_Tmelt = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1287,7 +1288,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.eps_dot_ref = double(std::stod(value));
 
 
-                joco_rod_flag_eps_dot_ref = true;
+                joco_substrate_flag_eps_dot_ref = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1297,7 +1298,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 data_for_print_f.joco_substrate.clamp_temp = double(std::stod(value));
 
 
-                joco_rod_flag_clamp_temp = true;
+                joco_substrate_flag_clamp_temp = true;
                 
                 number_of_true_flags += 1;
             }
@@ -1386,7 +1387,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == ""){
+            else if (keyword == "Stress regularization parameter (substrate)"){
 
                 data_for_print_f.corr_substrate.stresseps = double(std::stod(value));
 
@@ -1431,7 +1432,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Poission's ratio (rod)"){
+            else if (keyword == "Poisson's ratio (rod)"){
 
                 data_for_print_f.phys_rod.nu = double(std::stod(value));
 
@@ -1493,7 +1494,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Strain hardening exponent (rod):"){
+            else if (keyword == "Strain hardening exponent (rod)"){
 
                 data_for_print_f.joco_rod.n = double(std::stod(value));
 
@@ -1627,7 +1628,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == ""){
+            else if (keyword == "Stress regularization parameter (rod)"){
 
                 data_for_print_f.corr_rod.stresseps = double(std::stod(value));
 
@@ -1689,7 +1690,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Shift in x_driection"){
+            else if (keyword == "Shift in x-direction"){
 
                 data_for_print_f.shift_x = double(std::stod(value));
 
@@ -1699,7 +1700,7 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            else if (keyword == "Shift in y_driection"){
+            else if (keyword == "Shift in y-direction"){
 
                 data_for_print_f.shift_y = double(std::stod(value));
 
@@ -1719,7 +1720,8 @@ void read_textfile_new(data_struct& data_for_print_f){
                 number_of_true_flags += 1;
             }
 
-            /*else if (keyword == ""){
+            /* if you want to add any new variable
+            else if (keyword == ""){
 
                 data_for_print_f. = double(std::stod(value));
 
@@ -1733,51 +1735,256 @@ void read_textfile_new(data_struct& data_for_print_f){
 
     }
 
-    std::cout << number_of_true_flags << " true flags" << std::endl;
-    
-    //number_of_true_flags should be 63 right now 
+    //std::cout << number_of_true_flags << " true flags" << std::endl;
+    //number_of_true_flags should be 69 right now 
 
-    if (number_of_true_flags != 63){
+    if (number_of_true_flags != 69){
 
         printf("One or more values are missing:\n");
         printf("It should look like this:\n");
         printf("\n");
         printf("Length unit: 1\n");
         printf("\n");
+        printf("Copy in file:\n");
     
 
         if(length_Unit_flag == false){
-            printf("Copy in file: Length unit: add_your_value\n");
+            printf("Length unit: add_your_value\n");
         }
-
         if(time_Unit_flag == false){
-            printf("Copy in file: Time unit: add_your_value\n");
+            printf("Time unit: add_your_value\n");
         }
+        if(mass_Unit_flag == false){
+            printf("Mass unit: add_your_value\n");
+        }
+        if(temp_Unit_flag == false){
+            printf("Temp unit: add_your_value\n");
+        }
+        if(angle_Unit_flag == false){
+            printf("Angle unit: add_your_value\n");
+        }
+        if(dz_flag == false){
+            printf("Point distance: add_your_value\n");
+        }
+        if(ms_flag == false){
+            printf("Mass scaling: add_your_value\n");
+        };
+        if(hdx_flag == false){
+            printf("Smoothing length: add_your_value\n");
+        };
+        if(init_temp_flag == false){
+            printf("Initial temperature: add_your_value\n");
+        };
+        if(global_Vsf_flag == false){
+            printf("Velocity scale factor: add_your_value\n");
+        };
+        if(global_time_final_flag == false){
+            printf("Process time: add_your_value\n");
+        };
 
+        //velocity
+        if(vel_x_flag == false){
+            printf("Velocity in x-direction: add_your_value\n");
+        };
+        if(vel_y_flag == false){
+            printf("Velocity in y-direction: add_your_value\n");
+        };
+        if(vel_z_flag == false){
+            printf("Velocity in z-direction: add_your_value\n");
+        };
+        if(global_rod_vel_flag == false){
+            printf("Rod velocity: add_your_value\n");
+        };
+        if(global_substrate_vel_flag == false){
+            printf("Substrate velocity: add_your_value\n");
+        }
+        if(global_wz_flag == false){
+            printf("Angular velocity: add_your_value\n");
+        };
 
+        //substrate constants
+        //phys substrate
+        if(phys_substrate_flag_E == false){
+            printf("Young's modulus (substrate): add_your_value\n");
+        };
+        if(phys_substrate_flag_nu == false){
+            printf("Poisson's ratio (substrate): add_your_value\n");
+        };
+        if(phys_substrate_flag_rho0 == false){
+            printf("Reference density (substrate): add_your_value\n");
+        };
 
+        //joco substrate
+        if(joco_substrate_flag_A == false){
+            printf("Yield stress (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_B == false){
+            printf("Hardening modulus (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_C == false){
+            printf("Strain rate sensitivity coefficient (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_m == false){
+            printf("Thermal softening exponent (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_n == false){
+            printf("Strain hardening exponent (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_Tref == false){
+            printf("Reference temperature (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_Tmelt == false){
+            printf("Melting temperature (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_eps_dot_ref == false){
+            printf("Reference strain rate (substrate): add_your_value\n");
+        };
+        if(joco_substrate_flag_clamp_temp == false){
+            printf("Temperature clamping flag (substrate): add_your_value\n");
+        };
 
+        //trml substrate
+        if(trml_substrate_flag_cp == false){
+            printf("Specific heat capacity (substrate): add_your_value\n");
+        };
+        if(trml_substrate_flag_tq == false){
+            printf("Taylor–Quinney coefficient (substrate): add_your_value\n");
+        };
+        if(trml_substrate_flag_eta == false){
+            printf("Thermal efficiency (substrate): add_your_value\n");
+        };
+        if(trml_substrate_flag_k == false){
+            printf("Thermal conductivity (substrate): 117: add_your_value\n");
+        };
 
+        //corr substrate
+        if(corr_substrate_flag_alpha == false){
+            printf("Artificial viscosity coefficient alpha (substrate): add_your_value\n");
+        };
+        if(corr_substrate_flag_beta == false){
+            printf("Artificial viscosity coefficient beta (substrate): add_your_value\n");
+        };
+        if(corr_substrate_flag_eta == false){
+            printf("Viscosity regularization parameter (substrate): add_your_value\n");
+        };
+        if(corr_substrate_flag_xspheps == false){
+            printf("XSPH correction factor (substrate): add_your_value\n");
+        };
+        if(corr_substrate_flag_stresseps == false){
+            printf("Stress regularization parameter (substrate): add_your_value\n");
+        };
+        
+        if(heco_wp_to_air_flag == false){
+            printf("Heat convection workpiece to air: add_your_value\n");
+        };
+        if(heco_wp_to_metal_flag == false){
+            printf("Heat convection workpiece to metal: add_your_value\n");
+        };
 
+        //constants rod
+        //phys rod
+        if(phys_rod_flag_E == false){
+            printf("Young's modulus (rod): add_your_value\n");
+        };
+        if(phys_rod_flag_nu == false){
+            printf("Poisson's ratio (rod): add_your_value\n");
+        };
+        if(phys_rod_flag_rho0 == false){
+            printf("Reference density (rod): add_your_value\n");
+        };
 
+        //joco rod
+        if(joco_rod_flag_A == false){
+            printf("Yield stress (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_B == false){
+            printf("Hardening modulus (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_C == false){
+            printf("Strain rate sensitivity coefficient (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_m == false){
+            printf("Thermal softening exponent (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_n == false){
+            printf("Strain hardening exponent (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_Tref == false){
+            printf("Reference temperature (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_Tmelt == false){
+            printf("Melting temperature (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_eps_dot_ref == false){
+            printf("Reference strain rate (rod): add_your_value\n");
+        };
+        if(joco_rod_flag_clamp_temp == false){
+            printf("Temperature clamping flag (rod): add_your_value\n");
+        };
 
+        //trml rod
+        if(trml_rod_flag_cp == false){
+            printf("Specific heat capacity (rod): add_your_value\n");
+        };
+        if(trml_rod_flag_tq == false){
+            printf("Taylor–Quinney coefficient (rod): add_your_value\n");
+        };
+        if(trml_rod_flag_eta == false){
+            printf("Thermal efficiency (rod): add_your_value\n");
+        };
+        if(trml_rod_flag_k == false){
+            printf("Thermal conductivity (rod): 117: add_your_value\n");
+        };
 
+        //corr rod
+        if(corr_rod_flag_alpha == false){
+            printf("Artificial viscosity coefficient alpha (rod): add_your_value\n");
+        };
+        if(corr_rod_flag_beta == false){
+            printf("Artificial viscosity coefficient beta (rod): add_your_value\n");
+        };
+        if(corr_rod_flag_eta == false){
+            printf("Viscosity regularization parameter (rod): add_your_value\n");
+        };
+        if(corr_rod_flag_xspheps == false){
+            printf("XSPH correction factor (rod): add_your_value\n");
+        };
+        if(corr_rod_flag_stresseps == false){
+            printf("Stress regularization parameter (rod): add_your_value\n");
+        };
 
-        //hier weitermachen
+        //rod dimensions
+        if(substrate_width_flag == false){
+            printf("Substrate width: add_your_value\n");
+        };
+        if(substrate_length_flag == false){
+            printf("Substrate length: add_your_value\n");
+        };
+        if(substrate_thickness_flag == false){
+            printf("Substrate thickness: add_your_value\n");
+        };
+        if(rod_diameter_flag == false){
+            printf("Rod diameter: add_your_value\n");
+        };
+        if(rod_height_flag == false){
+            printf("Rod height: add_your_value\n");
+        };
+        if(shift_x_flag == false){
+            printf("Shift in x-direction: add_your_value\n");
+        };
+        if(shift_y_flag == false){
+            printf("Shift in y-direction: add_your_value\n");
+        };
+        if(CFl_flag == false){
+            printf("Courant–Friedrichs–Lewy (condition): add_your_value\n");
+        };
 
-
-
-
-
-
-
-
-
-
+        /*if( == false){
+            printf(": add_your_value\n");
+        }*/
 
         exit(0);
     }
     
-
     file.close();
 }

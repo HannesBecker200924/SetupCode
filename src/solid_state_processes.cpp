@@ -149,9 +149,9 @@ void setup_FS()
 
 	// empty_textfile();                          //for an empty sheet that has to be changed
 
-	//read_textfile(data_for_print_f);
+	//read_textfile(data_for_print_f);            //old function
 
-	read_textfile_new(data_for_print_f);
+	read_textfile_HaBe(data_for_print_f);
 
 	// units converter values (umrechnungen einheiten)
 	// standard Einheiten: meter, sekunde, gramm, grad celsius,
@@ -415,9 +415,6 @@ void setup_FS()
 	float_x delta_t_max = CFL * hdx * dz / (sqrt(max_vel) + c0);
 	global_time_dt = 0.5 * delta_t_max;
 
-	std::cout<<CFL<<std::endl;
-	std::cout<<trml_substrate.cp<<std::endl;
-	
 	delete[] pos;
 	delete[] vel;
 	delete[] h;
