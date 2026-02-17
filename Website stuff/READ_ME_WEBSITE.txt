@@ -1,4 +1,6 @@
-Download the Folder then open: FS_Website.html
-copy the most recent code in an Editor or vscode. Then the website will be in the same folder.
+Download the Folder.
+copy the most recent code in an Editor or vscode to update the website. 
+Save in the same location where you can see the images folder!!
+then open: FS_Website_new.html
 
 ~ H.P
