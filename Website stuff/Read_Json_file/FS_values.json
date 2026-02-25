@@ -1,0 +1,79 @@
+{
+    "units": {
+        "length_unit": "mm",
+        "time_unit": "s",
+        "mass_unit": "kg",
+        "temperature_unit": "°C",
+        "angle_unit": "rad"
+    },
+    "sub_rod_dimensions": {
+        "sub_width": 1,
+        "sub_length": 1,
+        "sub_thickness": 1,
+        "rod_height": 1,
+        "rod_diameter": 1
+    },
+    "Velocitys": {
+        "vx_sub": 1,
+        "vy_sub": 0,
+        "vz_sub": 0,
+        "rod_feed": -1,
+        "rpm": 1
+    },
+    "constants-substrate": {
+        "E_sub": 111,
+        "nu_sub": 1,
+        "rho_sub": 1,
+        "jc_A_sub": 1,
+        "jc_B_sub": 1,
+        "jc_C_sub": 1,
+        "jc_m_sub": 1,
+        "jc_n_sub": 1,
+        "jc_Tref_sub": 1,
+        "jc_Tmelt_sub": 1,
+        "jc_epsdot_sub": 1,
+        "c_sub": 1,
+        "tq_sub": 1,
+        "therm_eff_sub": 1,
+        "k_sub": 1
+    },
+    "constants-rod": {
+        "E_rod": 1,
+        "nu_rod": 1,
+        "rho_rod": 1,
+        "jc_A_rod": 1,
+        "jc_B_rod": 1,
+        "jc_C_rod": 1,
+        "jc_m_rod": 1,
+        "jc_n_rod": 1,
+        "jc_Tref_rod": 1,
+        "jc_Tmelt_rod": 1,
+        "jc_epsdot_rod": 1,
+        "c_rod": 1,
+        "tq_rod": 1,
+        "therm_eff_rod": 1,
+        "k_rod": 1
+    },
+    "global_constants": {
+        "init_particle_dist": 1,
+        "mass_scale": 1,
+        "smooth_len": 1.7,
+        "vel_scale": 10,
+        "proc_time": 1
+    },
+    "corr_parameters": {
+        "alpha_sph": 1,
+        "beta_sph": 1,
+        "eta_sph": 0.1,
+        "xsph_corr": 0.01,
+        "stress_reg": 0.3
+    },
+    "heat_convection": {
+        "h_air": 1,
+        "h_metal": 1
+    },
+    "centering_substrate": {
+        "shift_x": 1,
+        "shift_y": 0
+    }
+}
