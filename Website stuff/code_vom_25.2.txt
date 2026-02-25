@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friction Surface Values</title>
+</head>
+
+<style>
+    body {
+
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: gray;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        /* vertikal zentrieren */
+        justify-content: center;
+        /* horizontal zentrieren */
+        font-size: 50px;
+        color: beige;
+    }
+
+    .substrate-layout {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    .tab-button {
+        padding: 10px 25px;
+        cursor: pointer;
+        border: 1px solid gray;
+        background-color: #eee;
+        margin-right: 5px;
+    }
+
+    .tabs {
+        margin-bottom: 20px;
+        margin-left: 10px;
+    }
+
+    .tab-button.active {
+        background-color: red;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        border: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    /* Positionen im Grid */
+
+    .rod-inputs {
+        display: flex;
+        /* nebeneinander */
+        gap: 20px;
+        /* Abstand zwischen den beiden Inputs */
+        justify-content: center;
+        /* zentriert über dem Bild */
+    }
+
+    .rod-item {
+        display: flex;
+        flex-direction: column;
+        /* Label über Input */
+        align-items: center;
+        /* Label zentriert über Input */
+        gap: 5px;
+    }
+
+    .rod-item label {
+        margin-bottom: 5px;
+        /* Abstand zwischen Text und Input */
+    }
+
+    .width {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .image {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .length {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
+    .thickness {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    /* Bild styling */
+    .image img {
+        max-width: 600px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: left;
+        margin-left: 5px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 30px;
+        color: #333;
+    }
+
+    .main-layout {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    .left-panel {
+        flex: 1;
+    }
+
+    .right-panel {
+        flex: 0 0 auto;
+    }
+
+    .right-panel img {
+        max-width: 600px;
+        height: auto;
+    }
+
+    .done-container {
+        margin-top: 30px;
+        padding-bottom: 40px;
+    }
+
+    .done-container button {
+        padding: 12px 30px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #output-window {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 22vh;
+        background: #1e1e1e;
+        color: #fff;
+        border-top: 3px solid red;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        z-index: 9999;
+    }
+
+    #output-content {
+        font-size: 16px;
+        font-family: monospace;
+    }
+</style>
+
+<body>
+    <header>SPH Friction Surfacing Simulation Setup</header> <br>
+
+    <!--tabs ab hier-->
+    <br>
+    <div class="main-layout">
+
+        <div class="left-panel">
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="units">Units</button>
+                <button class="tab-button" data-tab="sub_rod_dimensions">Dimensions</button>
+                <button class="tab-button" data-tab="global_constants">Global constants</button>
+                <button class="tab-button" data-tab="Velocitys">Velocities</button>
+                <button class="tab-button" data-tab="constants-substrate">Substrate material properties</button>
+                <br><br>
+
+                <button class="tab-button" data-tab="constants-rod">Rod material properties</button>
+                <button class="tab-button" data-tab="corr_parameters">SPH parameters</button>
+                <button class="tab-button" data-tab="heat_convection"> Heat convection</button>
+                <button class="tab-button" data-tab="centering_substrate">Centering substrate</button>
+            </div>
+
+            <div class="tab-content" id="units">
+
+                Length Unit:
+                <select id="length_unit">
+                    <option value="m">m</option>
+                    <option value="cm">cm</option>
+                    <option value="mm">mm</option>
+                </select>
+                <br><br>
+
+                Time unit:
+                <select id="time_unit">
+                    <option value="s">s</option>
+                    <option value="ms">ms</option>
+                    <option value="min">min</option>
+                </select>
+                <br><br>
+
+                Mass unit:
+                <select id="mass_unit">
+                    <option value="kg">kg</option>
+                    <option value="g">g</option>
+                </select>
+                <br><br>
+
+                <!--Temperature unit: <input type="number" placeholder="Enter value"><br><br>-->
+                Temperature unit:
+                <select id="temperature_unit">
+                    <option value="°C">°C</option>
+                    <option value="K">K</option>
+                </select>
+                <br><br>
+
+                <!--Angle unit: <input type="number" placeholder="Enter value"><br><br>-->
+                Angle unit:
+                <select id="angle_unit">
+                    <option value="degree">degree</option>
+                    <option value="rad">rad</option>
+                </select>
+                <br><br>
+            </div>
+
+            <div class="tab-content" id="sub_rod_dimensions" style="display: none;">
+
+                Substrate width (W): <input placeholder="Enter value" id="sub_width" type="number"> <br> <br>
+                Substrate length (Ls): <input placeholder="Enter value" id="sub_length" type="number"> <br> <br>
+                Substrate thickness (t): <input placeholder="Enter value" id="sub_thickness" type="number"> <br> <br>
+                Rod length (Lr): <input placeholder="Enter value" id="rod_height" type="number"> <br> <br>
+                Rod diameter (d): <input placeholder="Enter value" id="rod_diameter" type="number"> <br> <br>
+            </div>
+
+            <div class="tab-content" id="Velocitys" style="display:none;">
+
+                Substrate velocity in x-direction: <input placeholder="Enter value" id="vx_sub" type="number"> <br> <br>
+                Substrate velocity in y-direction: <input placeholder="Enter value" id="vy_sub" type="number" value="0">
+                <br> <br>
+                Substrate velocity in z-direction: <input placeholder="Enter value" id="vz_sub" type="number" value="0">
+                <br> <br>
+                Rod feeding rate: <input placeholder="Ex. -1.8" id="rod_feed" type="number"> <br> <br>
+                <!--Subtrate velocity: <input placeholder="Enter value"type="number"> <br> <br>-->
+                Rod Rotational speed (RPM): <input placeholder="Enter value" id="rpm" type="number"> <br> <br> <br>
+            </div>
+
+            <div class="tab-content" id="constants-substrate" style="display:none;">
+
+                Young's modulus: <input placeholder="Enter value" id="E_sub" type="number"><br><br>
+                Poisson's ratio: <input placeholder="Enter value" id="nu_sub" type="number"><br><br>
+                Density: <input placeholder="Enter value" id="rho_sub" type="number"><br><br><br>
+
+                <h2>Johnson Cook parameters</h2><br><br>
+                A: <input placeholder="Enter value" id="jc_A_sub" type="number"> <br><br>
+                B: <input placeholder="Enter value" id="jc_B_sub" type="number"> <br><br>
+                C: <input placeholder="Enter value" id="jc_C_sub" type="number"> <br><br>
+                m: <input placeholder="Enter value" id="jc_m_sub" type="number"> <br><br>
+                n: <input placeholder="Enter value" id="jc_n_sub" type="number"> <br><br>
+                T_ref: <input placeholder="Enter value" id="jc_Tref_sub" type="number"> <br><br>
+                T_melt: <input placeholder="Enter value" id="jc_Tmelt_sub" type="number"> <br><br>
+                &#949;&#775;<sub>ref</sub> : <input placeholder="Enter value" id="jc_epsdot_sub" type="number">
+                <br><br><br>
+                <!--  clamp_temp: <input placeholder="Enter value" id="jc_clamp_sub" type="number"> <br><br>-->
+
+                <h2>Thermal properties</h2><br><br>
+                Specific heat capacity: <input placeholder="Enter value" id="c_sub" type="number"> <br><br>
+                Thermal conductivity: <input placeholder="Enter value" id="k_sub" type="number"> <br><br>
+                Taylor–Quinney coefficient: <input placeholder="Enter value" id="tq_sub" type="number"> <br><br>
+                Frictional heat efficiency: <input placeholder="Enter value" id="therm_eff_sub" type="number">
+                <br><br><br><br><br><br><br><br><br>
+            </div>
+
+            <div class="tab-content" id="constants-rod" style="display:none;">
+
+                Young's modulus: <input placeholder="Enter value" id="E_rod" type="number"><br><br>
+                Poisson's ratio: <input placeholder="Enter value" id="nu_rod" type="number"><br><br>
+                Density: <input placeholder="Enter value" id="rho_rod" type="number"><br><br> <br>
+
+                <h2>Johnson Cook parameters</h2><br><br>
+                A: <input placeholder="Enter value" id="jc_A_rod" type="number"> <br><br>
+                B: <input placeholder="Enter value" id="jc_B_rod" type="number"> <br><br>
+                C: <input placeholder="Enter value" id="jc_C_rod" type="number"> <br><br>
+                m: <input placeholder="Enter value" id="jc_m_rod" type="number"> <br><br>
+                n: <input placeholder="Enter value" id="jc_n_rod" type="number"> <br><br>
+                T_ref: <input placeholder="Enter value" id="jc_Tref_rod" type="number"> <br><br>
+                T_melt: <input placeholder="Enter value" id="jc_Tmelt_rod" type="number"> <br><br>
+                &#949;&#775;<sub>ref</sub> : <input placeholder="Enter value" id="jc_epsdot_rod" type="number"> <br><br>
+                <!--clamp_temp: <input placeholder="Enter value" id="jc_clamp_rod" type="number"> <br><br>--> <br>
+
+                <h2>Thermal properties</h2><br><br>
+                Specific heat capacity: <input placeholder="Enter value" id="c_rod" type="number"> <br><br>
+                Thermal conductivity: <input placeholder="Enter value" id="k_rod" type="number"> <br><br>
+                Taylor–Quinney coefficient: <input placeholder="Enter value" id="tq_rod" type="number"> <br><br>
+                Thermal efficiency: <input placeholder="Enter value" id="therm_eff_rod" type="number">
+                <br><br><br><br><br><br><br><br><br>
+            </div>
+
+            <div class="tab-content" id="global_constants" style="display:none;">
+
+                Initial particle distance: <input placeholder="Enter value" id="init_particle_dist" type="number">
+                <br><br>
+                Process time: <input placeholder="Enter value" id="proc_time" type="number"> <br><br>
+                Mass scaling factor: <input placeholder="Enter value" id="mass_scale" type="number" value="1"> <br><br>
+                Smoothing length factor: <input placeholder="Enter value" id="smooth_len" type="number" value="1.7">
+                <br><br>
+                <!--Temperature: <input placeholder="Enter value" id="init_temp" type="number"> <br><br>-->
+                Velocity scale factor: <input placeholder="Enter value" id="vel_scale" type="number" value="10">
+                <br><br><br>
+            </div>
+
+            <div class="tab-content" id="corr_parameters" style="display:none;">
+
+                Artificial viscosity coefficient alpha: <input placeholder="Enter value" id="alpha_sph" type="number"
+                    value="1">
+                <br><br>
+                Artificial viscosity coefficient beta: <input placeholder="Enter value" id="beta_sph" type="number"
+                    value="1">
+                <br><br>
+                Artificial viscosity coefficient eta: <input placeholder="Enter value" id="eta_sph" type="number"
+                    value="0.1"> <br><br>
+                SPH correction factor: <input placeholder="Enter value" id="xsph_corr" type="number" value="0.01">
+                <br><br>
+                Artificial stress factor: <input placeholder="Enter value" id="stress_reg" type="number" value="0.3">
+                <br><br><br>
+            </div>
+
+            <div class="tab-content" id="heat_convection" style="display: none;">
+
+                Heat convection workpiece to air: <input placeholder="Enter value" id="h_air" type="number"> <br> <br>
+                Heat convection workpiece to metal: <input placeholder="Enter value" id="h_metal" type="number"> <br>
+                <br> <br>
+            </div>
+
+            <div class="tab-content" id="centering_substrate" style="display:none;">
+
+                Shift in x-direction: <input placeholder="Enter value" id="shift_x" type="number"> <br><br>
+                Shift in y-direction: <input placeholder="Enter value" id="shift_y" type="number" value="0">
+                <br><br><br>
+            </div>
+
+            <div class="tab-content" id="terminal" style="display:none;">
+
+                moin
+            </div>
+
+            <div class="done-container">
+                <button id="saveJson">Generate job</button>
+                <button id="generateVTK">Generate VTK file</button>
+                <button id="loadJson">Load a job</button>
+                <button id="runjob">Run job</button>
+            </div>
+
+        </div>
+
+        <div class="right-panel">
+
+            <img src="./images/FS_Bild.png" alt="picture">
+        </div>
+
+        <br> <br> <br> <br>
+
+        <div id="output-window">
+            <div id="output-content">
+                Output terminal
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+<!-- javascript ab hier-->
+<script>
+
+    const buttons = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+
+            contents.forEach(c => c.style.display = 'none');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            const tab = button.getAttribute('data-tab');
+            document.getElementById(tab).style.display = 'block';
+            button.classList.add('active');
+        });
+    });
+
+
+
+    const fieldLabels = {
+        "sub_width": "Substrate width",
+        "sub_length": "Substrate length",
+        "sub_thickness": "Substrate thickness",
+        "rod_height": "Rod height",
+        "rod_diameter": "Rod diameter",
+        "rod_feed": "Rod feeding rate"
+    };
+
+
+    document.getElementById("saveJson").addEventListener("click", () => {
+
+        const output = document.getElementById("output-content");
+
+        const tabs = {
+            units: ["length_unit", "time_unit", "mass_unit", "temperature_unit", "angle_unit"],
+            sub_rod_dimensions: ["sub_width", "sub_length", "sub_thickness", "rod_height", "rod_diameter"],
+            Velocitys: ["vx_sub", "vy_sub", "vz_sub", "rod_feed", "rpm"],
+            "constants-substrate": ["E_sub", "nu_sub", "rho_sub", "jc_A_sub", "jc_B_sub", "jc_C_sub", "jc_m_sub", "jc_n_sub", "jc_Tref_sub", "jc_Tmelt_sub", "jc_epsdot_sub", "c_sub", "tq_sub", "therm_eff_sub", "k_sub"],
+            "constants-rod": ["E_rod", "nu_rod", "rho_rod", "jc_A_rod", "jc_B_rod", "jc_C_rod", "jc_m_rod", "jc_n_rod", "jc_Tref_rod", "jc_Tmelt_rod", "jc_epsdot_rod", "c_rod", "tq_rod", "therm_eff_rod", "k_rod"],
+            global_constants: ["init_particle_dist", "mass_scale", "smooth_len", "vel_scale", "proc_time"],
+            corr_parameters: ["alpha_sph", "beta_sph", "eta_sph", "xsph_corr", "stress_reg"],
+            heat_convection: ["h_air", "h_metal"],
+            centering_substrate: ["shift_x", "shift_y"]
+        };
+
+        let jsonData = {};
+        let missingFields = [];
+
+        for (let tab in tabs) {
+
+            jsonData[tab] = {};
+
+            tabs[tab].forEach(id => {
+
+                const element = document.getElementById(id);
+                if (!element) return;
+
+                let value = element.value.trim();
+
+                if (value === "") {
+                    missingFields.push(fieldLabels[id] || id);
+                    return;
+                }
+
+                let num = parseFloat(value);
+                jsonData[tab][id] = isNaN(num) ? value : num;
+            });
+        }
+
+        if (missingFields.length > 0) {
+            output.textContent = "Missing values: " + missingFields.join(", ");
+            return;
+        }
+
+        const dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(JSON.stringify(jsonData, null, 4));
+
+        const dlAnchor = document.createElement("a");
+        dlAnchor.href = dataStr;
+        dlAnchor.download = "FS_values.json";
+
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+
+        output.textContent = "Job successfully created!";
+    });
+
+    document.getElementById("loadJson").addEventListener("click", () => {
+
+        const output = document.getElementById("output-content");
+
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".json";
+
+        fileInput.addEventListener("change", event => {
+
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = e => {
+
+                try {
+
+                    const jsonData = JSON.parse(e.target.result);
+
+                    const tabs = {
+                        units: ["length_unit", "time_unit", "mass_unit", "temperature_unit", "angle_unit"],
+                        sub_rod_dimensions: ["sub_width", "sub_length", "sub_thickness", "rod_height", "rod_diameter"],
+                        Velocitys: ["vx_sub", "vy_sub", "vz_sub", "rod_feed", "rpm"],
+                        "constants-substrate": ["E_sub", "nu_sub", "rho_sub", "jc_A_sub", "jc_B_sub", "jc_C_sub", "jc_m_sub", "jc_n_sub", "jc_Tref_sub", "jc_Tmelt_sub", "jc_epsdot_sub", "c_sub", "tq_sub", "therm_eff_sub", "k_sub"],
+                        "constants-rod": ["E_rod", "nu_rod", "rho_rod", "jc_A_rod", "jc_B_rod", "jc_C_rod", "jc_m_rod", "jc_n_rod", "jc_Tref_rod", "jc_Tmelt_rod", "jc_epsdot_rod", "c_rod", "tq_rod", "therm_eff_rod", "k_rod"],
+                        global_constants: ["init_particle_dist", "mass_scale", "smooth_len", "vel_scale", "proc_time"],
+                        corr_parameters: ["alpha_sph", "beta_sph", "eta_sph", "xsph_corr", "stress_reg"],
+                        heat_convection: ["h_air", "h_metal"],
+                        centering_substrate: ["shift_x", "shift_y"]
+                    };
+
+                    for (let tab in tabs) {
+
+                        if (!jsonData[tab]) continue;
+
+                        tabs[tab].forEach(id => {
+
+                            const element = document.getElementById(id);
+
+                            if (element && jsonData[tab][id] !== undefined) {
+                                element.value = jsonData[tab][id];
+                            }
+                        });
+                    }
+
+                    output.textContent = "JSON file successfully loaded!";
+
+                } catch (err) {
+                    output.textContent = "Error reading JSON file: " + err.message;
+                }
+            };
+
+            reader.readAsText(file);
+        });
+
+        fileInput.click();
+    });
+
+    document.getElementById("runjob").addEventListener("click", () => {
+        const output = document.getElementById("output-content");
+        output.textContent = "Button not functional yet.";
+    });
+
+
+</script>
+
+</html>
