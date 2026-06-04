@@ -1,0 +1,75 @@
+{
+    "GPU": {
+        "GPU_id": 3
+    },
+    "sub_rod_dimensions": {
+        "sub_width": 50,
+        "sub_length": 100,
+        "sub_thickness": 10,
+        "rod_height": 40,
+        "rod_diameter": 20
+    },
+    "Velocitys": {
+        "vx_sub": 6,
+        "vy_sub": 0,
+        "vz_sub": 0,
+        "rod_feed": -1.8,
+        "rpm": 900
+    },
+    "constants-substrate": {
+        "E_sub": 70000000000,
+        "nu_sub": 0.3,
+        "rho_sub": 2700,
+        "jc_A_sub": 167000000,
+        "jc_B_sub": 0,
+        "jc_C_sub": 0.001,
+        "jc_m_sub": 0.859,
+        "jc_n_sub": 0,
+        "jc_Tref_sub": 20,
+        "jc_Tmelt_sub": 620,
+        "jc_epsdot_sub": 1,
+        "c_sub": 910,
+        "tq_sub": 0.9,
+        "therm_eff_sub": 0.9,
+        "k_sub": 117
+    },
+    "constants-rod": {
+        "E_rod": 70000000000,
+        "nu_rod": 0.3,
+        "rho_rod": 2700,
+        "jc_A_rod": 167000000,
+        "jc_B_rod": 0,
+        "jc_C_rod": 0.001,
+        "jc_m_rod": 0.859,
+        "jc_n_rod": 0,
+        "jc_Tref_rod": 20,
+        "jc_Tmelt_rod": 620,
+        "jc_epsdot_rod": 1,
+        "c_rod": 910,
+        "tq_rod": 0.9,
+        "therm_eff_rod": 0.9,
+        "k_rod": 117
+    },
+    "global_constants": {
+        "init_particle_dist": 1,
+        "mass_scale": 1,
+        "smooth_len": 1.7,
+        "vel_scale": 10,
+        "proc_time": 8
+    },
+    "corr_parameters": {
+        "alpha_sph": 1,
+        "beta_sph": 1,
+        "eta_sph": 0.1,
+        "xsph_corr": 0.01,
+        "stress_reg": 0.3
+    },
+    "heat_convection": {
+        "h_air": 0,
+        "h_metal": 0
+    },
+    "centering_substrate": {
+        "shift_x": 25,
+        "shift_y": 25
+    }
+}
