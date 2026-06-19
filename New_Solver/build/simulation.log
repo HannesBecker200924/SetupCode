@@ -1,0 +1,8 @@
+Simulation started
+CUDA_VISIBLE_DEVICES set to 3
+Using GPU 0
+this executable uses DOUBLE precision!
+using CSPM
+thermal conduction enabled using PSE
+0 of 14582614: 0 percent done, 0.170989 sec of est runtime inf hr, at temp 0
+estimated time for the thermo-meachnical solver: 81460.9 seconds, which is 22.628 hours
